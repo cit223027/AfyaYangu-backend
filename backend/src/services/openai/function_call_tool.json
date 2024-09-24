@@ -1,0 +1,238 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "get_closest_medical_centers_function_call",
+      "description": "Get the closest medical centers based on the user's latitude and longitude.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "description": "The user's latitude."
+          },
+          "longitude": {
+            "type": "number",
+            "description": "The user's longitude."
+          },
+          "number_of_centers": {
+            "type": "integer",
+            "description": "The number of closest medical centers to return (default is 3)."
+          }
+        },
+        "required": ["latitude", "longitude"],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "get_all_medical_centers_function_call",
+      "description": "Retrieve all medical centers.",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "get_medical_center_function_call",
+      "description": "Get the details of a specific medical center.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "medical_center_id": {
+            "type": "string",
+            "description": "The ID of the medical center."
+          }
+        },
+        "required": ["medical_center_id"],
+        "additionalProperties": false
+      }
+    }
+  },
+
+
+  {
+    "type": "function",
+    "function": {
+      "name": "get_all_medicine_function_call",
+      "description": "Retrieve all medicines from the database.",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "get_medicine_function_call",
+      "description": "Retrieve details of a specific medicine.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "medicine_id": {
+            "type": "string",
+            "description": "The ID of the medicine."
+          }
+        },
+        "required": ["medicine_id"],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "upsert_medicine_function_call",
+      "description": "Create or update a medicine in the database.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "medicine_id": {
+            "type": "string",
+            "description": "The ID of the medicine (optional for new medicines)."
+          },
+          "english_name": {
+            "type": "string",
+            "description": "The English name of the medicine."
+          },
+          "swahili_name": {
+            "type": "string",
+            "description": "The Swahili name of the medicine (optional)."
+          },
+          "kikuyu_name": {
+            "type": "string",
+            "description": "The Kikuyu name of the medicine (optional)."
+          },
+          "side_effects": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "List of side effects caused by the medicine."
+          },
+          "treats": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "List of conditions treated by the medicine."
+          }
+        },
+        "required": ["english_name", "side_effects", "treats"],
+        "additionalProperties": false
+      }
+    }
+  },
+
+
+  {
+    "type": "function",
+    "function": {
+      "name": "get_user_medications_function_call",
+      "description": "Retrieve all medications for a specific user.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "description": "The ID of the user whose medications need to be retrieved."
+          }
+        },
+        "required": ["user_id"],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "get_user_medication_function_call",
+      "description": "Retrieve a specific user medication based on medication ID.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "user_medication_id": {
+            "type": "string",
+            "description": "The ID of the user medication to retrieve."
+          }
+        },
+        "required": ["user_medication_id"],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "upsert_user_medication_function_call",
+      "description": "Create or update a user's medication details.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "description": "The ID of the user."
+          },
+          "medication_id": {
+            "type": "string",
+            "description": "The ID of the medication."
+          },
+          "dosage_type": {
+            "type": "string",
+            "enum": ["syrup", "tablets"],
+            "description": "The dosage type, either syrup or tablets."
+          },
+          "dosage_period": {
+            "type": "string",
+            "enum": ["day", "week", "month"],
+            "description": "The dosage period, whether per day, week, or month."
+          },
+          "dosages_per_period": {
+            "type": "integer",
+            "description": "Number of dosages to take within the period."
+          },
+          "intake_per_dosage": {
+            "type": "integer",
+            "description": "The number of intakes per dosage."
+          },
+          "intake_meal_instruction": {
+            "type": "string",
+            "enum": ["before_meal", "after_meal"],
+            "description": "When the medication should be taken relative to a meal (optional)."
+          },
+          "time_to_take": {
+            "type": "array",
+            "items": { "type": "integer" },
+            "description": "The times at which the medication should be taken, in hours."
+          }
+        },
+        "required": ["user_id", "medication_id", "dosage_type", "dosage_period", "dosages_per_period", "intake_per_dosage", "time_to_take"],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "delete_user_medication_function_call",
+      "description": "Delete a specific user's medication record.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "user_medication_id": {
+            "type": "string",
+            "description": "The ID of the user medication to delete."
+          }
+        },
+        "required": ["user_medication_id"],
+        "additionalProperties": false
+      }
+    }
+  }
+]

@@ -1,0 +1,102 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Language: English\nPageContext: The user is in /knowledge/organs/brain\nWhat is the function of the heart?"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"language\":\"english\",\"message\":\"The heart is responsible for pumping blood to all body organs\",\"suggested_actions\":[{\"action\":\"suggest_navigate_to_organ\",\"arguments\":{\"page\":\"heart\"}}]}",
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Habari yako? Naweza kukusaidia vipi?"
+    },
+    {
+      "role": "user",
+      "content": "Language: Swahili\nPageContext: The user is in /knowledge/first_aid/fainting\nKazi ya moyo ni ipi?"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"language\":\"swahili\",\"message\":\"Moyo huendesha mzunguko wa damu katika mwili wa binadamu\",\"suggested_actions\":[{\"action\":\"suggest_navigate_to_organ\",\"arguments\":{\"page\":\"heart\"}}]}",
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Language: English\nPageContext: The user is in /knowledge/organs/brain\nWhat is the function of the cerebellum?"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"language\":\"english\",\"message\":\"The \",\"suggested_actions\":[]}",
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Hello? How can I help you?"
+    },
+    {
+      "role": "user",
+      "content": "Language: English\nPageContext: The user is in /knowledge/organs/brain\nWho can NHIF cover?"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"language\":\"english\",\"message\":\"Any kenyan citizen can register as either self-employed or as an employed member of NHIF\",\"suggested_actions\":[{\"action\":\"suggest_navigate_to_insurance\",\"arguments\":{\"page\":\"nhif\"}}]}",
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Hello? How can I help you?"
+    },
+    {
+      "role": "user",
+      "content": "Language: English\nPageContext: The user is in /knowledge/organs/brain\nUserContext: user_id: \"ready_player_one\"\nWhen is my next medicine intake?"
+    },
+    {
+      "role": "assistant",
+      "tool_calls": [
+        {
+          "id": "call_id_1",
+          "type": "function",
+          "function": {
+            "name": "get_user_medications",
+            "arguments": "{\"user_id\":\"ready_player_one\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "call_id_1",
+      "content": "{\"user_medications\":\"[{\"user_medication_id\":\"user_medication_1\",\"medicine_id\":\"medicine_1\", \"dosage_period\":\"day\", \"time_to_take\":[75600]}]\"}"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"language\":\"english\",\"message\":\"Your next dosage is at 09:00pm\",\"suggested_actions\":[{\"action\":\"suggest_navigate_to_user_medication\",\"arguments\":{\"user_medication_id\":\"user_medication_1\"}}]}",
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Language: Kikuyu\nPageContext: The user is in /knowledge/organs/brain\n?"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"language\":\"english\",\"message\":\"Any kenyan citizen can register as either self-employed or as an employed member of NHIF\",\"suggested_actions\":[{\"action\":\"suggest_navigate_to_insurance\",\"arguments\":{\"page\":\"nhif\"}}]}",
+    }
+  ]
+}
