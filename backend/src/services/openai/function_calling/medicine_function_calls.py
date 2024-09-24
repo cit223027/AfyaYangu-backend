@@ -1,5 +1,5 @@
-from src.models.Medicine import Medicine
-from src.services.firebase.MedicineFirebaseRepository import MedicineFirebaseRepository
+from models.Medicine import Medicine
+from services.firebase.MedicineFirebaseRepository import MedicineFirebaseRepository
 
 
 def get_all_medicine_function_call(args: dict):

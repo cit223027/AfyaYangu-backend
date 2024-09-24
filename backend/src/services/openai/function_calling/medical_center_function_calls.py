@@ -1,4 +1,4 @@
-from src.services.firebase.MedicalCenterFirebaseRepository import MedicalCenterFirebaseRepository
+from services.firebase.MedicalCenterFirebaseRepository import MedicalCenterFirebaseRepository
 
 def get_closest_medical_centers_function_call(args: dict):
     latitude = args.get('latitude')

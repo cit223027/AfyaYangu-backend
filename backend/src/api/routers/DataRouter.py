@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from src.models.Medicine import Medicine
-from src.services.firebase.MedicineFirebaseRepository import MedicineFirebaseRepository
+from models.Medicine import Medicine
+from services.firebase.MedicineFirebaseRepository import MedicineFirebaseRepository
 
 data_router = APIRouter(prefix="/data", tags=["Data"])
 

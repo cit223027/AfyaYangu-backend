@@ -1,10 +1,12 @@
 from typing import Optional, List
 from firebase_admin import firestore
-from src.models.UserMedication import UserMedication
+from models.UserMedication import UserMedication
+from services.firebase.FirebaseInitializer import FirebaseInitializer
 
 
 class UserMedicationRepository:
 
+    firebase_app = FirebaseInitializer.initialize_firebase()
     user_medication_reference = firestore.client().collection('user_medication')
 
     @staticmethod

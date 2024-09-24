@@ -2,10 +2,13 @@ import os
 import fastapi as FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.routers.AIRouter import ai_router
-from src.api.routers.DataRouter import data_router
+from api.routers.AIRouter import ai_router
+from api.routers.DataRouter import data_router
+from services.firebase.FirebaseInitializer import FirebaseInitializer
 
-app = FastAPI.FastAPI(title = "")
+firebase_app = FirebaseInitializer.initialize_firebase()
+
+app = FastAPI.FastAPI(title = "AfyaYangu")
 app.add_middleware(
     CORSMiddleware,
     allow_origins = ["*"],

@@ -1,9 +1,12 @@
 from typing import Optional, List
 from firebase_admin import firestore
-from src.models.User import User
+from models.User import User
+from services.firebase.FirebaseInitializer import FirebaseInitializer
+
 
 class UserFirebaseRepository:
 
+    firebase_app = FirebaseInitializer.initialize_firebase()
     user_collection_reference = firestore.client().collection('user')
 
     @staticmethod

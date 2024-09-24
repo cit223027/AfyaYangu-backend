@@ -1,7 +1,5 @@
 from pydantic import BaseModel
 
-
-
 class PromptActionModel(BaseModel):
     action: str
     message: str

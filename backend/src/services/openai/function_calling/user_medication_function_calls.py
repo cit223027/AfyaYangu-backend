@@ -1,6 +1,6 @@
 from typing import List, Optional
-from src.repositories.UserMedicationRepository import UserMedicationRepository
-from src.models.UserMedication import UserMedication, DosageType, DosagePeriod, IntakeMealInstruction
+from repositories.UserMedicationRepository import UserMedicationRepository
+from models.UserMedication import UserMedication, DosageType, DosagePeriod, IntakeMealInstruction
 
 
 def get_user_medications_function_call(args: dict):

@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from src.api.models.PromptRequestModel import PromptRequestModel
-from src.api.models.PromptResponseModel import PromptResponseModel
+from api.models.PromptRequestModel import PromptRequestModel
+from api.models.PromptResponseModel import PromptResponseModel
 
 ai_router = APIRouter(prefix = "/ai", tags = ["Engine"])
 
@@ -12,6 +12,6 @@ def greater():
 def handle_prompt(request: PromptRequestModel):
     pass
 
-@ai_router.get("/image_prompt", response_model=)
+@ai_router.get("/image_prompt", response_model=PromptRequestModel)
 def handle_prompt_image(request: PromptRequestModel):
     pass

@@ -1,10 +1,13 @@
 from typing import Optional, List
 from firebase_admin import firestore
 from geopy.distance import geodesic  # For distance calculation
-from src.models.MedicalCenter import MedicalCenter
+from models.MedicalCenter import MedicalCenter
+from services.firebase.FirebaseInitializer import FirebaseInitializer
+
 
 class MedicalCenterFirebaseRepository:
 
+    firebase_app = FirebaseInitializer.initialize_firebase()
     medical_center_collection_reference = firestore.client().collection('medical_center')
 
     @staticmethod

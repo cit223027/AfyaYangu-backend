@@ -1,6 +1,6 @@
 from typing import List
 from pydantic import BaseModel
-from src.models.UserMedication import UserMedication
+from models.UserMedication import UserMedication
 
 
 class Prescription(BaseModel):

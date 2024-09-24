@@ -4,13 +4,13 @@ from pydantic import BaseModel
 
 
 class MedicalCenter(BaseModel):
-    medical_center_id: str
+    medical_center_id: Optional[str] = None
     name: str
     description: str
-    swahili_description: Optional[str]
-    kikuyu_description: Optional[str]
-    emergency_mobile_number: Optional[str]
-    secondary_emergency_mobile_number: Optional[str]
+    swahili_description: Optional[str] = None
+    kikuyu_description: Optional[str] = None
+    emergency_mobile_number: Optional[str] = None
+    secondary_emergency_mobile_number: Optional[str] = None
     latitude: float
     longitude: float
 

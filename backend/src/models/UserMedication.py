@@ -16,6 +16,7 @@ class IntakeMealInstruction(str, Enum):
     after_meal = "after_meal"
 
 class UserMedication(BaseModel):
+    user_medication_id: Optional[str]
     user_id: str
     medication_id: str
     dosage_type: DosageType
@@ -23,11 +24,12 @@ class UserMedication(BaseModel):
     dosages_per_period: int
     intake_per_dosage: int
     intake_meal_instruction: Optional[IntakeMealInstruction] = None
-    time_to_take: List[int]  # Time is measured in seconds from start of dosage_period (0000 hrs for day, Sunday 0000hrs for week, 1st 0000hrs for month)
+    time_to_take: List[int] = [] # Time is measured in seconds from start of dosage_period (0000 hrs for day, Sunday 0000hrs for week, 1st 0000hrs for month)
 
     @staticmethod
     def from_dict(data: dict) -> 'UserMedication':
         return UserMedication(
+            user_medication_id=data['user_medication_id'],
             user_id=data['user_id'],
             medication_id=data['medication_id'],
             dosage_type=data['dosage_type'],
@@ -40,6 +42,7 @@ class UserMedication(BaseModel):
 
     def to_dict(self) -> dict:
         return {
+            'user_medication_id': self.user_medication_id,
             'user_id': self.user_id,
             'medication_id': self.medication_id,
             'dosage_type': self.dosage_type,

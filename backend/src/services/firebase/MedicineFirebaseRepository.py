@@ -1,10 +1,13 @@
 from typing import Optional, List
 
 from firebase_admin import firestore
-from src.models.Medicine import Medicine
+from models.Medicine import Medicine
+from services.firebase.FirebaseInitializer import FirebaseInitializer
+
 
 class MedicineFirebaseRepository:
 
+    firebase_app = FirebaseInitializer.initialize_firebase()
     medicine_collection_reference = firestore.client().collection('medicine')
 
     @staticmethod
@@ -31,8 +34,8 @@ class MedicineFirebaseRepository:
         """
         doc_ref = MedicineFirebaseRepository.medicine_collection_reference.document(medicine_id)
         doc = doc_ref.get()
-        if doc is not None:
-            return Medicine.from_document(doc.to_dict())
+        if doc.exists:
+            return Medicine.from_dict(doc.to_dict())
         else:
             return None
 
