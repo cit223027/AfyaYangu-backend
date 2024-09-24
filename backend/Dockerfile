@@ -22,4 +22,4 @@ ENV NAME "bkmbigo-afyayangu-backend"
 ENV GOOGLE_APPLICATION_CREDENTIALS "/bkmbigo-afyayangu-creds.json"
 
 #guicorn alternative
-CMD [gunicorn -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT main:app]
+CMD uvicorn main:app --host 0.0.0.0 --port 80
