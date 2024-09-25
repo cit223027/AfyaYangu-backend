@@ -1,13 +1,13 @@
-import {LanguageTranslation, LanguageTranslations} from "@/pages/utils/LanguageTranslations.ts";
+import {LanguageTranslation, LanguageTranslations} from "@/utils/LanguageTranslations.ts";
 import {useContext} from "react";
-import {AppLanguageContext} from "@/pages/context/AppLanguageContext.ts";
+import {AppLanguageContext} from "@/context/AppLanguageContext.ts";
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {GraduationCap} from "lucide-react";
 import {Link} from "react-router-dom";
-import SpeakPage from "@/pages/components/speech/SpeakPage.tsx";
-import SearchArticleSection from "@/pages/components/search/SearchArticleSection.tsx";
-import {AfyaYanguKnowledgeArticles} from "@/pages/components/article/AfyaYanguArticles.tsx";
+import SpeakPage from "@/components/speech/SpeakPage.tsx";
+import SearchArticleSection from "@/components/search/SearchArticleSection.tsx";
+import {AfyaYanguKnowledgeArticles} from "@/components/article/AfyaYanguArticles.tsx";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion.tsx";
 import {
     Breadcrumb,

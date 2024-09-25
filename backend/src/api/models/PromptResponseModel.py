@@ -1,13 +1,17 @@
 from pydantic import BaseModel
 
-class PromptActionModel(BaseModel):
-    action: str
+class PromptPerformedActionModel(BaseModel):
     message: str
+    details: dict[str, str]
+
+class PromptSuggestionModel(BaseModel):
+    message: str
+    action_name: str
     options: dict[str, str]
 
 class PromptResponseModel(BaseModel):
     language: str
     response: str
-    performed_actions: list[PromptActionModel]
-    unperformed_actions: list[PromptActionModel]
+    performed_actions: list[PromptPerformedActionModel] = []
+    unperformed_actions: list[PromptSuggestionModel] = []
 

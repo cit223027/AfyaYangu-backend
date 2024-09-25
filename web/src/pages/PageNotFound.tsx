@@ -1,8 +1,8 @@
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {House, PanelsTopLeft} from "lucide-react";
 import {useContext} from "react";
-import {AppLanguageContext} from "@/pages/context/AppLanguageContext.ts";
-import {LanguageTranslations} from "@/pages/utils/LanguageTranslations.ts";
+import {AppLanguageContext} from "@/context/AppLanguageContext.ts";
+import {LanguageTranslations} from "@/utils/LanguageTranslations.ts";
 import {Button} from "@/components/ui/button.tsx";
 import {Link} from "react-router-dom";
 

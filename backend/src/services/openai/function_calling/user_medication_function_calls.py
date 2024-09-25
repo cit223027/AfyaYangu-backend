@@ -1,5 +1,5 @@
 from typing import List, Optional
-from repositories.UserMedicationRepository import UserMedicationRepository
+from services.firebase.UserMedicationRepository import UserMedicationRepository
 from models.UserMedication import UserMedication, DosageType, DosagePeriod, IntakeMealInstruction
 
 

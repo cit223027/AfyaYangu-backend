@@ -1,17 +1,17 @@
-import MainTopBar from "@/pages/components/topbar/MainTopBar.tsx";
-import {UserInformation, UserInformationContext} from "@/pages/context/UserInformationContext.ts";
-import {AppLanguage, AppLanguageContext} from "@/pages/context/AppLanguageContext.ts";
+import MainTopBar from "@/components/topbar/MainTopBar.tsx";
+import {UserInformation, UserInformationContext} from "@/context/UserInformationContext.ts";
+import {AppLanguage, AppLanguageContext} from "@/context/AppLanguageContext.ts";
 import {ReactElement, useEffect, useState} from "react";
-import {AIContext, AIPageInformation} from "@/pages/context/AIContext.ts";
+import {AIContext, AIPageInformation} from "@/context/AIContext.ts";
 import {Link, Outlet, useLocation} from "react-router-dom";
 import {Button} from "@/components/ui/button.tsx";
-import {LanguageTranslations} from "@/pages/utils/LanguageTranslations.ts";
+import {LanguageTranslations} from "@/utils/LanguageTranslations.ts";
 import {Bot, HomeIcon} from "lucide-react";
 import KnowledgeIconDark from "/public/knowledge.dark.svg"
 import MedicineIconDark from "/public/medicine.dark.svg"
 import AmbulanceIconDark from "/public/ambulance.dark.svg"
-import SpeakProvider from "@/pages/components/speech/SpeakProvider.tsx";
-import AIChatSpace from "@/pages/components/ai/AIChatSpace.tsx";
+import SpeakProvider from "@/components/speech/SpeakProvider.tsx";
+import AIChatSpace from "@/components/ai/AIChatSpace.tsx";
 
 enum TopPage {
     Home,

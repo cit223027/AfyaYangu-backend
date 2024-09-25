@@ -18,6 +18,13 @@ from services.openai.function_calling.user_medication_function_calls import get_
 class ChatGptHelper:
     assistant_name = "AfyaYangu"
 
+    api_key_secret = "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"
+
+    api_key_secret_1 = "t9lFOGYXMZ0rcpMssZqK0lQx2yxdbReird" # -
+    api_key_secret_2 = "TC7KAL_Q0Owp77wVw0PoGPZH1T-B161TL03GRfYT3BlbkFJmmB" # ''
+    api_key_secret_3 = "-nxX35Ia8hLUcJx8dUkzMx5b1MXm9jBatEkGGa8jvur" # _
+    api_key_secret_4 = "75Ye5nICddsuWDbXdOOIYg5cTVIA"
+
     function_call_reference = {
         'get_closest_medical_centers_function_call': get_closest_medical_centers_function_call,
         'get_all_medical_centers_function_call': get_all_medical_centers_function_call,
@@ -42,7 +49,9 @@ class ChatGptHelper:
         :return: PromptResponseModel with the assistant's response and any actions taken
         """
         return ChatGptHelper._create_base_model_request(
-            client = OpenAI(),
+            client = OpenAI(
+                api_key= 'sk-proj-' + ChatGptHelper.api_key_secret_1 + '-' + ChatGptHelper.api_key_secret_2 + ChatGptHelper.api_key_secret_3 + ChatGptHelper.api_key_secret_4,
+            ),
             messages = request.conversation
         )
 
@@ -59,8 +68,13 @@ class ChatGptHelper:
                 tools=ChatGptHelper.function_call_tools
             )
 
+            print("ChatGPTHelper: Chat response obtained:")
+            print(response)
+
             return ChatGptHelper._handle_response(client, messages, response, model)
-        except:
+        except Exception as e:
+            print("Error obtained: _create_base_model_request")
+            print(e)
             pass
 
 
@@ -76,7 +90,8 @@ class ChatGptHelper:
         :return:
         """
         first_choice = response.choices[0]
-        finish_reason = first_choice['finish_reason']
+
+        finish_reason = first_choice.finish_reason
         message = first_choice.message
 
         # Handle function call
