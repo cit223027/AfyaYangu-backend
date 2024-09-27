@@ -55,7 +55,7 @@ async def get_user_medication(user_medication_id: str):
         "data": user_medication
     }
 
-@data_router.post("/user_medications")
+@data_router.post("/user_medication")
 async def upsert_new_user_medication(user_medication: UserMedication):
     user_medication_id = UserMedicationRepository.upsert_user_medication(user_medication)
     return {

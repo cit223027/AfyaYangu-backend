@@ -1,6 +1,6 @@
 import {AppLanguage} from "@/context/AppLanguageContext.ts";
 import AIConversationMessage from "@/components/ai/AIConversationMessage.ts";
-import {Medicine} from "@/models/Medicine.ts";
+import Medicine from "@/models/Medicine.ts";
 import UserMedication from "@/models/UserMedication.ts";
 import {MedicalCenter} from "@/models/MedicalCenter.ts";
 import Prescription from "@/models/Prescription.ts";
@@ -40,7 +40,7 @@ export default class BackendApi {
                 userContext: userContext
             }
 
-            const response = await fetch(`${BACKEND_SITE}/ai/prompt`, {
+            const response = await fetch(`${BACKEND_SITE}/ai/base_completion`, {
                 method: 'POST',
                 body: JSON.stringify(requestBody),
                 headers: {
@@ -90,7 +90,7 @@ export default class BackendApi {
     /* Data Prompts */
 
     /* Medicine */
-    // <editor-tabs desc="Medicine API calls">
+    // <editor-fold desc="Medicine API calls">
     static async getAllMedicines(): Promise<Medicine[] | undefined> {
         try {
             const response = await fetch(`${BACKEND_SITE}/data/medicines`, {
@@ -152,12 +152,12 @@ export default class BackendApi {
             return undefined;
         }
     }
-    // </editor-tabs>
+    // </editor-fold>
 
-    // <editor-tabs desc="UserMedication API calls">
-    static async getUserMedications(user_id: string): Promise<UserMedication[] | undefined> {
+    // <editor-fold desc="UserMedication API calls">
+    static async getUserMedicationsForUser(user_id: string): Promise<UserMedication[] | undefined> {
         try {
-            const response = await fetch(`${BACKEND_SITE}/data/user_medications/${user_id}`, {
+            const response = await fetch(`${BACKEND_SITE}/data/user_medications/user/${user_id}`, {
                 method: 'GET'
             });
 
@@ -195,7 +195,7 @@ export default class BackendApi {
 
     static async upsertNewUserMedication(user_medication: UserMedication): Promise<string | undefined> {
         try {
-            const response = await fetch(`${BACKEND_SITE}/data/user_medications`, {
+            const response = await fetch(`${BACKEND_SITE}/data/user_medication`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -215,9 +215,9 @@ export default class BackendApi {
             return undefined;
         }
     }
-    // </editor-tabs>
+    // </editor-fold>
 
-    // <editor-tabs desc="MedicalCenter API calls">
+    // <editor-fold desc="MedicalCenter API calls">
     /* Medical Centers */
     static async getAllMedicalCenters(): Promise<MedicalCenter[] | undefined> {
         try {
@@ -340,9 +340,9 @@ export default class BackendApi {
         }
     }
 
-    // </editor-tabs>
+    // </editor-fold>
 
-    // <editor-tabs desc="Prescription API calls">
+    // <editor-fold desc="Prescription API calls">
     /* Prescription */
     static async getUserPrescriptions(user_id: string): Promise<Prescription[] | undefined> {
         try {

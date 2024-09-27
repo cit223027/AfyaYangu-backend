@@ -238,7 +238,7 @@ export default class BackendCache {
         }
 
         // If cache is stale or doesn't exist, fetch from backend
-        const medications = await BackendApi.getUserMedications(user_id);
+        const medications = await BackendApi.getUserMedicationsForUser(user_id);
         if (!medications) return undefined;
 
         // Cache the fetched medications and IDs

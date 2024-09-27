@@ -1,4 +1,7 @@
-from fastapi import APIRouter
+from typing import Annotated
+
+from fastapi import APIRouter, Form
+from starlette.formparsers import FormMessage
 
 from api.models.PromptRequestModel import PromptRequestModel, PromptConversationMessage
 from api.models.SmsIncomingMessageModel import SmsIncomingMessageModel
@@ -9,18 +12,23 @@ africas_talking_repository = AfricasTalkingRepository()
 sms_router = APIRouter(prefix="/sms", tags=["sms"])
 
 @sms_router.post("/incoming_message")
-def notify_incoming_message(incoming_message: SmsIncomingMessageModel):
-    # Send prompt to model
-    request_message = "Origin: SMS " + "Sender:" + incoming_message.from_ + "\n" + incoming_message.text
+def notify_incoming_message(
+        from_: Annotated[str, Form(alias="from")],  # Alias 'from' to 'from_'
+        text: Annotated[str, Form()]
+):
+    # Construct request message
+    request_message = f"Origin: SMS Sender: {from_}\n{text}"
 
+    # Send prompt to the model
     response = ChatGptHelper.send_base_model_request(
         conversation=[
             PromptConversationMessage(
-                role = "user",
-                message = request_message
+                role="user",
+                message=request_message
             )
         ]
     )
 
-    # handle response
-    africas_talking_repository.send_message(recipient=incoming_message.from_, message=response.message)
+    # Send the response back to the sender
+    africas_talking_repository.send_message(recipient=from_, message=response.message)
+
