@@ -53,7 +53,7 @@ export const LanguageTranslations = {
     /* Page Options */
     pageHome: new LanguageTranslation('Home', 'Nyumbani', 'M\u0169c\u0129\u0129'),
     pageKnowledge: new LanguageTranslation('Knowledge', 'Ujumbe', '\u0168menyo'),
-    pageMyMedicine: new LanguageTranslation('My Medicine', 'Dawa Zangu', 'Dawa Ciakwa'),
+    pageMedicine: new LanguageTranslation('Medicine', 'Dawa', 'Dawa'),
     pageEmergencyContacts: new LanguageTranslation('Emergency Contacts', 'Nambari za Usaidizi', 'Namba cia uteithio'),
 
     /* Knowledge Translations */
@@ -136,12 +136,21 @@ export const LanguageTranslations = {
 
 
     // <editor-fold desc="Knowledge Exercise Articles">
-    knowledgeExercisePushUpTitle: new LanguageTranslation('Push Up', 'Mazoezi ya kujiinua', ''),
+    knowledgeExercisePushUpTitle: new LanguageTranslation('Push Ups', 'Mazoezi ya kujiinua', ''),
     knowledgeExercisePushUpDescription: new LanguageTranslation('Learn how to perform push up exercises', 'Mazoezi ya kujiinua', ''),
     // </editor-fold>
 
     /* Emergency Contacts Translations */
 
+
+    // <editor-fold desc="Medicine Translations">
+    medicineMyDosage: new LanguageTranslation('My Dosages', 'Dozi zangu' ,'Dawa Ciakwa'),
+    medicineMyDosageDescription: new LanguageTranslation('These are the medications you are supposed to take', 'Hizi ndizo dawa unazofaa kuchukua kwa muda ujao' ,'Ici nicio dawa ufatie kunyua kahida karoka'),
+    medicineMyPrescriptions: new LanguageTranslation('My Prescriptions', 'Maagizo ya daktari', 'Makinya ma dagitari'),
+    medicineAvailableMedicine: new LanguageTranslation('Available Medicine', 'Dawa zinazopatikana','Dawa iria iri duka'),
+
+
+    // </editor-fold>
 
     /* AI Options */
     aiAsk: new LanguageTranslation('Ask Peter', 'Uliza Petero', 'Uria Peter'),

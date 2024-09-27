@@ -23,8 +23,30 @@ export default function ArticleComponent({
 
     const [currentChosenLanguage, setCurrentChosenLanguage] = useState(AppLanguage.English)
 
-    function setNewAppLanguage(chosenAppLanguage: AppLanguage) {
+    function chooseNewLanguage(chosenAppLanguage: AppLanguage) {
         switch (chosenAppLanguage) {
+            case AppLanguage.English:
+                setCurrentChosenLanguage(AppLanguage.English)
+                break;
+            case AppLanguage.Swahili:
+                if (hasSwahiliTranslation) {
+                    setCurrentChosenLanguage(AppLanguage.Swahili)
+                } else {
+                    setCurrentChosenLanguage(AppLanguage.English)
+                }
+                break;
+            case AppLanguage.Kikuyu:
+                if (hasKikuyuTranslation) {
+                    setCurrentChosenLanguage(AppLanguage.Kikuyu)
+                } else {
+                    setCurrentChosenLanguage(AppLanguage.English)
+                }
+                break;
+        }
+    }
+
+    function setUpNewLanguage(newAppLanguage: AppLanguage) {
+        switch (newAppLanguage) {
             case AppLanguage.English:
                 // setCurrentChosenLanguage(AppLanguage.English)
                 // setIsLackingTranslation(false)
@@ -51,8 +73,8 @@ export default function ArticleComponent({
     }
 
     useEffect(() => {
-        setNewAppLanguage(appLanguage)
-    }, []);
+        setUpNewLanguage(appLanguage)
+    }, [appLanguage]);
 
 
 
@@ -64,9 +86,9 @@ export default function ArticleComponent({
                         currentChosenLanguage={currentChosenLanguage}
                         hasSwahiliTranslation={hasSwahiliTranslation}
                         hasKikuyuTranslation={hasKikuyuTranslation}
-                        onTranslateToEnglish={() => { setNewAppLanguage(AppLanguage.English) }}
-                        onTranslateToSwahili={() => { setNewAppLanguage(AppLanguage.Swahili) }}
-                        onTranslateToKikuyu={() => { setNewAppLanguage(AppLanguage.Kikuyu) }}
+                        onTranslateToEnglish={() => { chooseNewLanguage(AppLanguage.English) }}
+                        onTranslateToSwahili={() => { chooseNewLanguage(AppLanguage.Swahili) }}
+                        onTranslateToKikuyu={() => { chooseNewLanguage(AppLanguage.Kikuyu) }}
                     />
                 </div>
             )}

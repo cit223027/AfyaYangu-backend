@@ -1,9 +1,9 @@
 import {createContext} from "react";
 
 export enum AppLanguage {
-    English = 0,
-    Swahili = 1,
-    Kikuyu = 2
+    English = "english",
+    Swahili = "swahili",
+    Kikuyu = "kikuyu"
 }
 
 export const AppLanguageContext = createContext({

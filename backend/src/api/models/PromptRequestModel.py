@@ -5,6 +5,7 @@ class PromptConversationMessage(BaseModel):
     role: str
     message: str
 
+
     def to_open_ai_message(self):
         return {
             "role": self.role,
@@ -22,3 +23,4 @@ class PromptRequestModel(BaseModel):
     pageContext: str = None
     userContext: str = None
     chatContext: str = None
+

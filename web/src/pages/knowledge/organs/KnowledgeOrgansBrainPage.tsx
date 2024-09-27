@@ -5,16 +5,6 @@ import SpeakParagraph from "@/components/speech/SpeakParagraph.tsx";
 import SpeakDivHeading from "@/components/speech/SpeakDivHeading.tsx";
 import ArticlePreview from "@/components/article/ArticlePreview.tsx";
 import {LanguageTranslations} from "@/utils/LanguageTranslations.ts";
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator
-} from "@/components/ui/breadcrumb.tsx";
-import {Link} from "react-router-dom";
-
 
 export default function KnowledgeOrgansBrainPage() {
 
@@ -31,43 +21,6 @@ function EnglishArticle() {
         <SpeakPage>
             <div className="w-full h-px">
                 <SpeakDiv>
-
-                    <Breadcrumb className="mb-2 flex flex-row items-center">
-                        <BreadcrumbList>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink asChild>
-                                    <Link to="/public">{LanguageTranslations.pageHome.english}</Link>
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-
-                            <BreadcrumbSeparator className="" />
-
-                            <BreadcrumbItem>
-                                <BreadcrumbLink asChild>
-                                    <Link to="/knowledge">{LanguageTranslations.pageKnowledge.english}</Link>
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-
-                            <BreadcrumbSeparator className="" />
-
-                            <BreadcrumbSeparator className="" />
-
-                            <BreadcrumbItem>
-                                <BreadcrumbLink asChild>
-                                    <Link to="/knowledge/organs">{LanguageTranslations.knowledgeOrgans.english}</Link>
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-
-                            <BreadcrumbSeparator className="" />
-
-                            <BreadcrumbItem>
-                                <BreadcrumbPage>
-                                    <h4 className="andika-bold text-xl pb-1">{LanguageTranslations.knowledgeOrgansBrainTitle.english}</h4>
-                                </BreadcrumbPage>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
-
                     <SpeakParagraph>
                         <p>The brain is a complex organ that controls thought, memory, emotion, touch, motor skills, vision, breathing, temperature, hunger and every process that regulates our body.</p>
                     </SpeakParagraph>

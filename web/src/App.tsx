@@ -3,7 +3,7 @@ import MainPageLayout from "@/pages/MainPageLayout.tsx";
 import PageNotFound from "@/pages/PageNotFound.tsx";
 import KnowledgePage from "@/pages/KnowledgePage.tsx";
 import HomePage from "@/pages/HomePage.tsx";
-import MyMedicinePage from "@/pages/MyMedicinePage.tsx";
+import MedicinePage from "@/pages/MedicinePage.tsx";
 import EmergencyContactPage from "@/pages/EmergencyContactPage.tsx";
 import {KnowledgeOrgansPage} from "@/pages/knowledge/KnowledgeOrgansPage.tsx";
 import KnowledgeDiseasesPage from "@/pages/knowledge/KnowledgeDiseasesPage.tsx";
@@ -34,6 +34,10 @@ import FirstAidChokingPage from "@/pages/knowledge/firstaid/FirstAidChokingPage.
 import FirstAidFaintingPage from "@/pages/knowledge/firstaid/FirstAidFaintingPage.tsx";
 import FirstAidNoseBleedPage from "@/pages/knowledge/firstaid/FirstAidNoseBleedPage.tsx";
 import KnowledgeExercisePage from "@/pages/knowledge/KnowledgeExercisePage.tsx";
+import ExercisePushUpPage from "@/pages/knowledge/exercise/ExercisePushUpsPage.tsx";
+import MedicineMedicinePage from "@/pages/medicine/MedicineMedicinePage.tsx";
+import MedicinePrescriptionsPage from "@/pages/medicine/MedicinePrescriptionsPage.tsx";
+import MedicineUserMedicationPage from "@/pages/medicine/MedicineUserMedicationPage.tsx";
 
 export default function App() {
 
@@ -52,8 +56,8 @@ export default function App() {
                     element: <KnowledgePage />
                 },
                 {
-                    path: "/mymedicine",
-                    element: <MyMedicinePage />
+                    path: "/medicine",
+                    element: <MedicinePage />
                 },
                 {
                     path: "/emergencycontacts",
@@ -124,6 +128,10 @@ export default function App() {
                     element: <KnowledgeExercisePage />
                 },
                 {
+                    path: '/knowledge/exercise/pushups',
+                    element: <ExercisePushUpPage />
+                },
+                {
                     path: '/knowledge/mentalhealth',
                     element: <KnowledgeMentalHealthPage />
                 },
@@ -168,8 +176,20 @@ export default function App() {
                     element: <FirstAidFaintingPage />
                 },
                 {
-                    path: '/knowledge/firstaid/nosebleeding',
+                    path: '/knowledge/firstaid/nosebleed',
                     element: <FirstAidNoseBleedPage />
+                },
+                {
+                    path: '/medicine/medicine',
+                    element: <MedicineMedicinePage />
+                },
+                {
+                    path: '/medicine/prescription',
+                    element: <MedicinePrescriptionsPage />
+                },
+                {
+                    path: '/medicine/user_medication',
+                    element: <MedicineUserMedicationPage />
                 }
             ]
         }

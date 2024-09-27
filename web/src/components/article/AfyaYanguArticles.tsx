@@ -4,7 +4,6 @@ import {KnowledgeOrgansHeartPreview} from "@/pages/knowledge/organs/KnowledgeOrg
 import {LanguageTranslation, LanguageTranslations} from "@/utils/LanguageTranslations.ts";
 import {KnowledgeOrgansKidneyPreview} from "@/pages/knowledge/organs/KnowledgeOrgansKidneyPage.tsx";
 import {KnowledgeOrgansLiverPreview} from "@/pages/knowledge/organs/KnowledgeOrgansLiverPage.tsx";
-import {KnowledgeOrgansLungPreview} from "@/pages/knowledge/organs/KnowledgeOrgansLungPage.tsx";
 import ArticlePreview from "@/components/article/ArticlePreview.tsx";
 
 // <editor-fold desc="Articles">
@@ -61,8 +60,10 @@ const OrgansLung: AfyaYanguArticle = {
     title: LanguageTranslations.knowledgeOrgansLungTitle,
     preview: (isWide) => {
         return (
-            <KnowledgeOrgansLungPreview
-                link='/knowledge/organs/lung'
+            <ArticlePreview
+                link="/knowledge/organs/lung"
+                description={LanguageTranslations.knowledgeOrgansLungDescription}
+                title={LanguageTranslations.knowledgeOrgansLungTitle}
                 isWide={isWide}
             />
         )

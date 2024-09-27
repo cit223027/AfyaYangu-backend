@@ -9,13 +9,6 @@ import SpeakPage from "@/components/speech/SpeakPage.tsx";
 import SearchArticleSection from "@/components/search/SearchArticleSection.tsx";
 import {AfyaYanguKnowledgeArticles} from "@/components/article/AfyaYanguArticles.tsx";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion.tsx";
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList, BreadcrumbPage,
-    BreadcrumbSeparator
-} from "@/components/ui/breadcrumb.tsx";
 
 export default function KnowledgePage() {
 
@@ -26,24 +19,6 @@ export default function KnowledgePage() {
         <SpeakPage className="w-full h-full">
             <div className="w-full h-full flex flex-col">
                 <div className="my-2">
-                    <Breadcrumb className="mb-2 flex flex-row items-center">
-                        <BreadcrumbList>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink asChild>
-                                    <Link to="/">Home</Link>
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-
-                            <BreadcrumbSeparator className="" />
-
-                            <BreadcrumbItem>
-                                <BreadcrumbPage>
-                                    <h4 className="andika-bold text-xl pb-1">{LanguageTranslations.pageKnowledge.getTranslation(appLanguage)}</h4>
-                                </BreadcrumbPage>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
-
                     <p>{LanguageTranslations.knowledgePageDescription.getTranslation(appLanguage)}</p>
                 </div>
 

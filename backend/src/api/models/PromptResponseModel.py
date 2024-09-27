@@ -11,7 +11,7 @@ class PromptSuggestionModel(BaseModel):
 
 class PromptResponseModel(BaseModel):
     language: str
-    response: str
+    message: str
     performed_actions: list[PromptPerformedActionModel] = []
     unperformed_actions: list[PromptSuggestionModel] = []
 

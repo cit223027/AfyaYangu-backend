@@ -2,27 +2,11 @@
   "messages": [
     {
       "role": "user",
-      "content": "Language: English\nPageContext: The user is in /knowledge/organs/brain\nWhat is the function of the heart?"
+      "content": "What is the heart?"
     },
     {
       "role": "assistant",
-      "content": "{\"language\":\"english\",\"message\":\"The heart is responsible for pumping blood to all body organs\",\"suggested_actions\":[{\"action\":\"suggest_navigate_to_organ\",\"arguments\":{\"page\":\"heart\"}}]}",
-    }
-  ]
-}
-{
-  "messages": [
-    {
-      "role": "system",
-      "content": "Habari yako? Naweza kukusaidia vipi?"
-    },
-    {
-      "role": "user",
-      "content": "Language: Swahili\nPageContext: The user is in /knowledge/first_aid/fainting\nKazi ya moyo ni ipi?"
-    },
-    {
-      "role": "assistant",
-      "content": "{\"language\":\"swahili\",\"message\":\"Moyo huendesha mzunguko wa damu katika mwili wa binadamu\",\"suggested_actions\":[{\"action\":\"suggest_navigate_to_organ\",\"arguments\":{\"page\":\"heart\"}}]}",
+      "content": "{\"language\":\"english\",\"message\":\"The heart is a vital muscular organ present in most animals, responsible for pumping blood throughout the body. Through the circulatory system, it ensures the delivery of oxygen and nutrients to tissues, while transporting metabolic waste such as carbon dioxide to the lungs for removal. About the size of a closed fist, the heart is located in the chest's central compartment, known as the mediastinum, nestled between the lungs.\n## Anatomy of the Heart\nThe heart is divided into four chambers, which work together to ensure proper blood flow:\n  - **Atria (Upper Chambers):** The heart has two upper chambers called atria — the right atrium and the left atrium. These chambers receive blood: the right atrium receives deoxygenated blood from the body, and the left atrium receives oxygenated blood from the lungs.\n   - **Ventricles (Lower Chambers):** The two lower chambers, the right and left ventricles, pump blood out of the heart. The right ventricle sends deoxygenated blood to the lungs, while the left ventricle pumps oxygenated blood to the rest of the body through the aorta.\n  - **Heart Valves:** Four valves ensure unidirectional blood flow through the heart: the tricuspid, pulmonary, mitral, and aortic valves. These valves prevent backflow, ensuring efficient circulation.\nThe heart is also surrounded by a protective double-layered membrane called the pericardium, which provides lubrication and reduces friction during heartbeats.\n## Function of the Heart\nThe heart functions as a pump, working in a coordinated manner to circulate blood throughout the body. This process is split between the right and left sides of the heart:\n### Right Side of the Heart\n  - **Receiving Deoxygenated Blood:** The right atrium collects deoxygenated blood from the body through the superior and inferior vena cava.\n  - **Blood to the Lungs:** The right atrium contracts, pushing the blood into the right ventricle, which then pumps it to the lungs through the pulmonary artery. In the lungs, the blood releases carbon dioxide and absorbs oxygen.\n### Left Side of the Heart\n   - **Receiving Oxygenated Blood:** The left atrium receives oxygenated blood from the lungs via the pulmonary veins.\n   - **Blood to the Body:** The left atrium contracts, moving the blood into the left ventricle. The left ventricle, being the strongest chamber, pumps oxygenated blood out to the rest of the body through the aorta, the body's largest artery.\nWith each heartbeat, the heart ensures that oxygen-rich blood is supplied to organs and tissues while removing waste products like carbon dioxide.\n## Common Complications and Disorders of the Heart\n   - **Heart Attack (Myocardial Infarction):** Occurs when blood flow to a part of the heart is blocked, usually by a clot, leading to damage of the heart muscle. Symptoms include chest pain, shortness of breath, and fatigue.\n   - **Heart Failure:** A condition where the heart is unable to pump blood effectively, leading to fatigue, fluid retention, and shortness of breath. This can result from chronic high blood pressure or coronary artery disease.\n   - **Arrhythmia:** A disorder of the heart's electrical system that causes abnormal heart rhythms. Some arrhythmias may be harmless, but others can lead to serious complications like stroke or heart failure.\n   - **Cardiomyopathy:** A disease of the heart muscle that makes it harder for the heart to pump blood. It can lead to heart failure and other complications if left untreated.\n   - **Hypertension (High Blood Pressure):** A condition that puts extra strain on the heart and blood vessels, increasing the risk of heart disease, stroke, and kidney damage.\"}",
     }
   ]
 }
@@ -30,61 +14,11 @@
   "messages": [
     {
       "role": "user",
-      "content": "Language: English\nPageContext: The user is in /knowledge/organs/brain\nWhat is the function of the cerebellum?"
+      "content": "{\"origin\":\"website\",\"language\":\"english\",\"user\":\"Not Logged In\",\"page\":\"\\knowledge\\organs\",\"prompt\":\"What is the heart?\"}"
     },
     {
       "role": "assistant",
-      "content": "{\"language\":\"english\",\"message\":\"The \",\"suggested_actions\":[]}",
-    }
-  ]
-}
-{
-  "messages": [
-    {
-      "role": "system",
-      "content": "Hello? How can I help you?"
-    },
-    {
-      "role": "user",
-      "content": "Language: English\nPageContext: The user is in /knowledge/organs/brain\nWho can NHIF cover?"
-    },
-    {
-      "role": "assistant",
-      "content": "{\"language\":\"english\",\"message\":\"Any kenyan citizen can register as either self-employed or as an employed member of NHIF\",\"suggested_actions\":[{\"action\":\"suggest_navigate_to_insurance\",\"arguments\":{\"page\":\"nhif\"}}]}",
-    }
-  ]
-}
-{
-  "messages": [
-    {
-      "role": "system",
-      "content": "Hello? How can I help you?"
-    },
-    {
-      "role": "user",
-      "content": "Language: English\nPageContext: The user is in /knowledge/organs/brain\nUserContext: user_id: \"ready_player_one\"\nWhen is my next medicine intake?"
-    },
-    {
-      "role": "assistant",
-      "tool_calls": [
-        {
-          "id": "call_id_1",
-          "type": "function",
-          "function": {
-            "name": "get_user_medications",
-            "arguments": "{\"user_id\":\"ready_player_one\"}"
-          }
-        }
-      ]
-    },
-    {
-      "role": "tool",
-      "tool_call_id": "call_id_1",
-      "content": "{\"user_medications\":\"[{\"user_medication_id\":\"user_medication_1\",\"medicine_id\":\"medicine_1\", \"dosage_period\":\"day\", \"time_to_take\":[75600]}]\"}"
-    },
-    {
-      "role": "assistant",
-      "content": "{\"language\":\"english\",\"message\":\"Your next dosage is at 09:00pm\",\"suggested_actions\":[{\"action\":\"suggest_navigate_to_user_medication\",\"arguments\":{\"user_medication_id\":\"user_medication_1\"}}]}",
+      "content": "{\"language\":\"english\",\"message\":\"The heart is a vital muscular organ present in most animals, responsible for pumping blood throughout the body. Through the circulatory system, it ensures the delivery of oxygen and nutrients to tissues, while transporting metabolic waste such as carbon dioxide to the lungs for removal. About the size of a closed fist, the heart is located in the chest's central compartment, known as the mediastinum, nestled between the lungs.\n## Anatomy of the Heart\nThe heart is divided into four chambers, which work together to ensure proper blood flow:\n  - **Atria (Upper Chambers):** The heart has two upper chambers called atria — the right atrium and the left atrium. These chambers receive blood: the right atrium receives deoxygenated blood from the body, and the left atrium receives oxygenated blood from the lungs.\n   - **Ventricles (Lower Chambers):** The two lower chambers, the right and left ventricles, pump blood out of the heart. The right ventricle sends deoxygenated blood to the lungs, while the left ventricle pumps oxygenated blood to the rest of the body through the aorta.\n  - **Heart Valves:** Four valves ensure unidirectional blood flow through the heart: the tricuspid, pulmonary, mitral, and aortic valves. These valves prevent backflow, ensuring efficient circulation.\nThe heart is also surrounded by a protective double-layered membrane called the pericardium, which provides lubrication and reduces friction during heartbeats.\n## Function of the Heart\nThe heart functions as a pump, working in a coordinated manner to circulate blood throughout the body. This process is split between the right and left sides of the heart:\n### Right Side of the Heart\n  - **Receiving Deoxygenated Blood:** The right atrium collects deoxygenated blood from the body through the superior and inferior vena cava.\n  - **Blood to the Lungs:** The right atrium contracts, pushing the blood into the right ventricle, which then pumps it to the lungs through the pulmonary artery. In the lungs, the blood releases carbon dioxide and absorbs oxygen.\n### Left Side of the Heart\n   - **Receiving Oxygenated Blood:** The left atrium receives oxygenated blood from the lungs via the pulmonary veins.\n   - **Blood to the Body:** The left atrium contracts, moving the blood into the left ventricle. The left ventricle, being the strongest chamber, pumps oxygenated blood out to the rest of the body through the aorta, the body's largest artery.\nWith each heartbeat, the heart ensures that oxygen-rich blood is supplied to organs and tissues while removing waste products like carbon dioxide.\n## Common Complications and Disorders of the Heart\n   - **Heart Attack (Myocardial Infarction):** Occurs when blood flow to a part of the heart is blocked, usually by a clot, leading to damage of the heart muscle. Symptoms include chest pain, shortness of breath, and fatigue.\n   - **Heart Failure:** A condition where the heart is unable to pump blood effectively, leading to fatigue, fluid retention, and shortness of breath. This can result from chronic high blood pressure or coronary artery disease.\n   - **Arrhythmia:** A disorder of the heart's electrical system that causes abnormal heart rhythms. Some arrhythmias may be harmless, but others can lead to serious complications like stroke or heart failure.\n   - **Cardiomyopathy:** A disease of the heart muscle that makes it harder for the heart to pump blood. It can lead to heart failure and other complications if left untreated.\n   - **Hypertension (High Blood Pressure):** A condition that puts extra strain on the heart and blood vessels, increasing the risk of heart disease, stroke, and kidney damage.\"}",
     }
   ]
 }
@@ -92,11 +26,47 @@
   "messages": [
     {
       "role": "user",
-      "content": "Language: Kikuyu\nPageContext: The user is in /knowledge/organs/brain\n?"
+      "content": "{\"origin\":\"website\",\"language\":\"english\",\"user\":\"Not Logged In\",\"page\":\"\\knowledge\\organs\",\"prompt\":\"What is the function of the heart?\"}"
     },
     {
       "role": "assistant",
-      "content": "{\"language\":\"english\",\"message\":\"Any kenyan citizen can register as either self-employed or as an employed member of NHIF\",\"suggested_actions\":[{\"action\":\"suggest_navigate_to_insurance\",\"arguments\":{\"page\":\"nhif\"}}]}",
+      "content": "{\"language\":\"english\",\"message\":\"## Function of the Heart\nThe heart functions as a pump, working in a coordinated manner to circulate blood throughout the body. This process is split between the right and left sides of the heart:\n### Right Side of the Heart\n  - **Receiving Deoxygenated Blood:** The right atrium collects deoxygenated blood from the body through the superior and inferior vena cava.\n  - **Blood to the Lungs:** The right atrium contracts, pushing the blood into the right ventricle, which then pumps it to the lungs through the pulmonary artery. In the lungs, the blood releases carbon dioxide and absorbs oxygen.\n### Left Side of the Heart\n   - **Receiving Oxygenated Blood:** The left atrium receives oxygenated blood from the lungs via the pulmonary veins.\n   - **Blood to the Body:** The left atrium contracts, moving the blood into the left ventricle. The left ventricle, being the strongest chamber, pumps oxygenated blood out to the rest of the body through the aorta, the body's largest artery.\nWith each heartbeat, the heart ensures that oxygen-rich blood is supplied to organs and tissues while removing waste products like carbon dioxide.\n\"}",
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "{\"origin\":\"sms\",\"prompt\":\"What is the function of the heart?\"}"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"language\":\"english\",\"message\":\"Function of the Heart\nThe heart functions as a pump, working in a coordinated manner to circulate blood throughout the body. This process is split between the right and left sides of the heart:\nRight Side of the Heart\n\n  - Receiving Deoxygenated Blood: The right atrium collects deoxygenated blood from the body through the superior and inferior vena cava.\n  - Blood to the Lungs: The right atrium contracts, pushing the blood into the right ventricle, which then pumps it to the lungs through the pulmonary artery. In the lungs, the blood releases carbon dioxide and absorbs oxygen.\n\nLeft Side of the Heart\n   - Receiving Oxygenated Blood: The left atrium receives oxygenated blood from the lungs via the pulmonary veins.\n   - Blood to the Body: The left atrium contracts, moving the blood into the left ventricle. The left ventricle, being the strongest chamber, pumps oxygenated blood out to the rest of the body through the aorta, the body's largest artery.\nWith each heartbeat, the heart ensures that oxygen-rich blood is supplied to organs and tissues while removing waste products like carbon dioxide.\n\"}",
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "{\"origin\":\"website\",\"language\":\"english\",\"user\":\"Not Logged In\",\"page\":\"\\knowledge\\organs\",\"prompt\":\"What is cholera?\"}"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"language\":\"english\",\"message\":\"**Cholera** is an infectious disease caused by the bacterium *Vibrio cholerae*, which primarily spreads through contaminated water and food. It leads to severe diarrhea and dehydration,which, if untreated, can be life-threatening. Cholera is most prevalent in regions with poor sanitation and limited access to clean water.\n## Signs and Symptoms of Cholera\nThe symptoms of cholera can range from mild to severe, and in some cases, they may be life-threatening if not treated promptly. Common signs and symptoms include:\n   - **Severe, watery diarrhea:** Often described as “rice water” stools due to their pale appearance, diarrhea is the hallmark symptom of cholera. It can lead to rapid dehydration.\n   - **Vomiting:** Vomiting often accompanies diarrhea, which contributes further to dehydration.\n   - **Dehydration:** Symptoms of dehydration include dry mouth, extreme thirst, muscle cramps, reduced urination, and in severe cases, sunken eyes and low blood pressure.\n   - **Rapid heart rate:** Severe dehydration can cause an increased heart rate as the body struggles to maintain blood circulation.\n   - **Shock:** If fluid loss is severe and untreated, cholera can lead to shock, which is life-threatening and requires immediate medical intervention.\nCholera symptoms can progress quickly, so it is essential to seek medical attention at the earliest signs of severe diarrhea or dehydration. Immediate treatment with rehydration is critical.\n## Causes of Cholera\nCholera is caused by the bacterium *Vibrio cholerae*, which is typically transmitted through contaminated water or food. Key factors that contribute to the spread of cholera include:\n   - **Contaminated water:** Drinking or using water that contains Vibrio cholerae is the primary route of infection. Contaminated water sources are common in areas with poor sanitation and inadequate sewage treatment.\n   - **Contaminated food:** Eating food prepared with contaminated water or food that has been in contact with an infected person’s feces can also lead to cholera infection.\n   - **Unhygienic conditions:** Poor hygiene practices, lack of clean water, and inadequate sanitation facilities contribute to the spread of cholera in densely populated areas, refugee camps, or disaster-stricken regions.\n   - **Person-to-person transmission:** While less common, direct contact with the feces of an infected person can also spread the disease, particularly in areas with poor hygiene.\n## Diagnosis of Cholera\nIf cholera is suspected based on symptoms like severe diarrhea and dehydration, a medical professional should be consulted immediately. Diagnosis typically involves:\n   - **Stool sample:** A stool sample is taken to detect the presence of Vibrio cholerae bacteria. Rapid diagnostic tests (RDTs) can sometimes be used for faster results.\n   - **Assessment of dehydration:** Doctors will assess the severity of dehydration by checking for symptoms like sunken eyes, dry mouth, and low blood pressure.\nAccurate diagnosis is critical to ensure prompt treatment and prevent the spread of the disease. If you or someone you know experiences symptoms of cholera, visit a medical center immediately.\n## Treatment of Cholera\nThe treatment for cholera focuses primarily on rapid rehydration, as the disease causes extreme fluid loss. Medical treatment typically involves:\n   - **Oral Rehydration Salts (ORS):** The first line of treatment for mild to moderate cases is oral rehydration salts, a simple solution that replenishes lost fluids and electrolytes.\n   - **Intravenous fluids:** In severe cases of dehydration, intravenous fluids may be necessary to restore lost fluids quickly.\n   - **Antibiotics:** Antibiotics can shorten the duration of diarrhea and reduce the severity of the illness, though they are typically reserved for severe cases.\n   - **Zinc supplements:** Zinc has been shown to reduce the duration of diarrhea in children with cholera and is often recommended in pediatric cases.\nIt is crucial to seek treatment from a medical center as soon as cholera symptoms arise. Delaying treatment increases the risk of severe dehydration, which can be life-threatening. In areas where cholera is endemic, emergency rehydration treatments are usually available at local health clinics.\n## Prevention and Risk Factors\nPreventing cholera largely depends on improving access to clean water and practicing good hygiene. Here are key steps to reduce the risk of cholera infection:\n   - **Access to clean water:** Ensure that the water you drink and use for cooking is clean. Boiling water or using water purification tablets can help eliminate cholera bacteria in contaminated water.\n   - **Good hygiene practices:** Wash hands with soap and clean water, especially after using the bathroom and before handling food.\n   - **Proper sanitation:** Use proper toilet facilities, and dispose of feces in a sanitary manner to prevent contamination of water sources.\n   - **Cook food thoroughly:** Ensure food is cooked properly and avoid eating raw or undercooked seafood, especially from contaminated waters.\n   - **Cholera vaccination:** In some areas, oral cholera vaccines are available for individuals living in or traveling to regions where cholera is common.\nBy following these preventive measures and seeking immediate medical attention in case of symptoms, the spread and severity of cholera can be significantly reduced.\"}",
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "{\"origin\":\"website\",\"language\":\"swahili\",\"user\":\"Not Logged In\",\"page\":\"\\knowledge\\organs\",\"prompt\":\"Pafu ni nini?\"}"
+    },
+    {
+      "role": "assistant",
+      "content": "{\"language\":\"swahili\",\"message\":\"#Pafu\nPafu ni kiungo kikuu katika mfumo wako wa upumuaji, mtandao wa tishu na viungo vinavyokuwezesha kupumua. Mwanadamu ana mapafu mawili, moja kila upande wa kifua.\n## Kazi za pafu\nKazi kuu ya mapafu ni kuwezesha ubadilishanaji wa gesi. Oksijeni huingia kwenye damu huku dioksidi ya kaboni ikitolewa nje ya mwili.\n## Mchakato wa kupumua\nUnapovuta pumzi kupitia pua au mdomo wako, hewa husafiri chini hadi kwenye koromeo (trachea) yako na kuingia kwenye njia mbili zinazoitwa mirija ya bronchia. Kila mrija wa bronchia unaelekea kwenye pafu moja. Mirija ya bronchia husababisha njia ndogo za hewa zinazoitwa bronchi na hatimaye bronchioles. Bronchioles huishia kwenye vifuko vidogo vyahewa vinavyoitwa alveoli, ambapo ubadilishanaji wa gesi hutokea.\n## Magonjwa na matatizo ya kawaida\n   1. **Pumu:** Kufinywa kwa njia ya hewa kunakofanya kupumua kuwa kugumu\n   2. **Saratani ya mapafu:** Aina ya saratani inayoshambulia pafu. Kuvuta sigara ni sababu\nkuu ya hatari\n3. **Nimonia:** Magonjwa ya mapafu yanayosababisha maji ndani ya mapafu\n4. **Kifua kikuu:** Ugonjwa wa bakteria wa kawaida na unaoambukiza unaosababisha maambukizi kwenye mapafu ya mtu.\"}",
     }
   ]
 }

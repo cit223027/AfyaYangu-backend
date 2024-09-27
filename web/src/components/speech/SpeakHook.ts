@@ -26,6 +26,8 @@ export default function useSpeakHook(): SpeakHookType {
 function useEnglishSpeakHook(): SpeakHookType {
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [isAvailable, _setIsAvailable] = useState(typeof window !== 'undefined' && 'speechSynthesis' in window);
+    const [_new, _setNew] = useState(false)
+    const [_new1, _setNew1] = useState(false)
 
     useEffect(() => {
         if (!isAvailable) return;

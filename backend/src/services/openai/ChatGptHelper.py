@@ -39,8 +39,8 @@ class ChatGptHelper:
     }
 
     @staticmethod
-    def send_prompt_request(
-        request: PromptRequestModel
+    def send_base_model_request(
+        conversation: List[PromptConversationMessage] = []
     ):
         """
         Sends a request to the assistant and handles function calls or responses.
@@ -110,7 +110,7 @@ class ChatGptHelper:
         else:
             return PromptResponseModel(
                 language = "english",
-                response = message.content
+                message = message.content
             )
 
     @staticmethod

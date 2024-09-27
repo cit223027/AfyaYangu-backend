@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from api.routers.AIRouter import ai_router
 from api.routers.DataRouter import data_router
+from api.routers.SmsRouter import sms_router
 from services.firebase.FirebaseInitializer import FirebaseInitializer
 
 firebase_app = FirebaseInitializer.initialize_firebase()
@@ -24,3 +25,4 @@ def health():
 
 app.include_router(ai_router)
 app.include_router(data_router)
+app.include_router(sms_routers)

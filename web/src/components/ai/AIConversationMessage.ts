@@ -1,9 +1,9 @@
 import {AppLanguage} from "@/context/AppLanguageContext.ts";
 
 export enum AIConversationUser {
-    User,
-    System,
-    Assistant
+    User= "user",
+    System = "system",
+    Assistant = "assistant"
 }
 
 export default class AIConversationMessage {

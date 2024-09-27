@@ -28,6 +28,7 @@ export type UserInformationContextType = {
     isLoggedIn: boolean,
     userInformation?: UserInformation,
     setUpUserInformation: (userBasicInformation: UserInformation) => void,
+    showLogInDialog: () => void,
     logOutUser: () => void,
 }
 
@@ -36,5 +37,6 @@ export const UserInformationContext = createContext<UserInformationContextType>(
     userInformation: undefined,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setUpUserInformation: (_userInfo: UserInformation) => {},
+    showLogInDialog: () => {},
     logOutUser: () => {}
 });

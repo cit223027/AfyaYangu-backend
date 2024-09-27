@@ -8,6 +8,7 @@ import {Textarea} from "@/components/ui/textarea.tsx";
 import AIConversationMessage, {AIConversationUser} from "@/components/ai/AIConversationMessage.ts";
 import BackendApi from "@/components/backend/BackendApi.ts";
 import {AIContext} from "@/context/AIContext.ts";
+import Markdown from "react-markdown";
 
 type AIChatSpaceProps = {
     className?:string
@@ -41,6 +42,7 @@ export default function AIChatSpace({
     };
 
     const handleSubmit = () => {
+
         const newLoadingMessage: AILoadingMessage = {
             language: appLanguage,
             message: textPrompt
@@ -58,19 +60,21 @@ export default function AIChatSpace({
             pageInformation.convertToPageContext(),
             ""
         ).then((result) => {
+
             if (result === undefined) {
                 // An Error has occurred
                 setTextPrompt(newLoadingMessage.message)
                 setLoadingMessage(undefined)
             } else {
                 const newMessages = conversationMessages
+
+                newMessages.push(AIConversationMessage.createUserMessage(newLoadingMessage.language, newLoadingMessage.message))
                 newMessages.push(result)
+
                 setConversationMessages(newMessages)
                 setLoadingMessage(undefined)
             }
         })
-
-        setLoadingMessage(undefined)
         
     }
 
@@ -88,8 +92,8 @@ export default function AIChatSpace({
 
     return (
         <div className={`${className} flex flex-col w-full`}>
-            <div className="flex flex-row justify-between py-4 my-2">
-                <h4>{LanguageTranslations.aiAsk.getTranslation(appLanguage)}</h4>
+            <div className="flex flex-row justify-between py-2 my-2 px-2">
+                <h4 className="text-lg font-bold">{LanguageTranslations.aiAsk.getTranslation(appLanguage)}</h4>
                 <Button variant="ghost" onClick={onCloseAIChatSpace}><ExitIcon /></Button>
             </div>
 
@@ -157,11 +161,9 @@ function ConversationLoadingComponent(
     return (
         <div id={id} className={`${className} w-full flex flex-row items-center`}>
             <Loader2Icon />
-            <Textarea
-                className="h-48 grow bg-gray-800 rounded-lg"
-                value={loadingMessage.message}
-                onChange={() => {}}
-            />
+            <div className="p-2 ms-2 rounded-xl bg-gray-900">
+                <p>{loadingMessage.message}</p>
+            </div>
         </div>
     )
 }
@@ -215,13 +217,18 @@ function ConversationMessageSystemComponent(
     }
 ) {
 
+    const { appLanguage } = useContext(AppLanguageContext)
+
     return (
         <div id={id} className={`${className} w-full flex flex-row px-2 py-3`}>
-            <div className="p-2 rounded-xl mx-2 bg-gray-900 grow min-w-0">
+            <div className="p-3 rounded-xl mx-2 bg-gray-900 grow min-w-0">
                 <div className="flex flex-col space-y-2">
-                    <p>{aiConversationMessage.message}</p>
-                    <div className="flex flex-row w-full justify-start">
-                        <p className="font-light text-sm">{aiConversationMessage.language}</p>
+                    <Markdown>{aiConversationMessage.message}</Markdown>
+                    <div className="flex flex-row w-full justify-start mt-4">
+                        <p>
+                            <span className="font-bold text-sm">{LanguageTranslations.language.getTranslation(appLanguage)}: </span>
+                            <span className="font-light italic text-sm">{aiConversationMessage.language}</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -250,7 +257,7 @@ function ConversationMessageUserComponent(
 
     return (
         <div id={id} className={`${className} w-full flex flex-row-reverse px-2 py-3`}>
-            <div className="p-2 rounded-xl mx-2 bg-gray-900 grow min-w-0">
+            <div className="p-3 rounded-xl mx-2 bg-gray-900 grow min-w-0">
                 <div className="flex flex-col space-y-2">
                     <p>{aiConversationMessage.message}</p>
                     <div className="flex flex-row w-full justify-end">

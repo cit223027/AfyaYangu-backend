@@ -7,16 +7,17 @@ import {Link, Outlet, useLocation} from "react-router-dom";
 import {Button} from "@/components/ui/button.tsx";
 import {LanguageTranslations} from "@/utils/LanguageTranslations.ts";
 import {Bot, HomeIcon} from "lucide-react";
-import KnowledgeIconDark from "/public/knowledge.dark.svg"
-import MedicineIconDark from "/public/medicine.dark.svg"
-import AmbulanceIconDark from "/public/ambulance.dark.svg"
+import KnowledgeIconDark from "/public/images/page/knowledge.dark.svg"
+import MedicineIconDark from "/public/images/page/medicine.dark.svg"
+import AmbulanceIconDark from "/public/images/page/ambulance.dark.svg"
 import SpeakProvider from "@/components/speech/SpeakProvider.tsx";
 import AIChatSpace from "@/components/ai/AIChatSpace.tsx";
+import BreadCrumbGenerator from "@/utils/BreadCrumbGenerator.tsx";
 
 enum TopPage {
     Home,
     Knowledge,
-    MyMedicine,
+    Medicine,
     FirstAid,
     EmergencyContacts
 }
@@ -26,6 +27,7 @@ export default function MainPageLayout() {
     const [userInformationData, setUserInformationData] = useState<UserInformation | undefined>(undefined)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [currentUserLanguage, setCurrentUserLanguage] = useState(AppLanguage.English)
+    const [pageBreadcrumb, setPageBreadcrumb] = useState((<></>))
 
     const [isShowingAIPane, setIsShowingAIPane] = useState<boolean>(false)
     const [aiPageInformation, setAIPageInformation] = useState<AIPageInformation>(
@@ -45,8 +47,8 @@ export default function MainPageLayout() {
     useEffect(() => {
         if (pathname.startsWith("/knowledge")) {
             setCurrentTopPage(TopPage.Knowledge)
-        } else if (pathname.startsWith("/mymedicine")) {
-            setCurrentTopPage(TopPage.MyMedicine)
+        } else if (pathname.startsWith("/medicine")) {
+            setCurrentTopPage(TopPage.Medicine)
         } else if (pathname.startsWith("/firstaid")) {
             setCurrentTopPage(TopPage.FirstAid)
         } else if (pathname.startsWith("/emergencycontacts")) {
@@ -54,7 +56,10 @@ export default function MainPageLayout() {
         } else {
             setCurrentTopPage(TopPage.Home)
         }
-    }, [pathname]);
+
+        // set breadcrumb
+        setPageBreadcrumb(BreadCrumbGenerator.generateBreadCrumbs(pathname, currentUserLanguage))
+    }, [pathname, currentUserLanguage]);
 
     function SideMenuOption(
         topPage: TopPage,
@@ -68,8 +73,8 @@ export default function MainPageLayout() {
             case TopPage.Home:
                 destinationUrl = "/"
                 break
-            case TopPage.MyMedicine:
-                destinationUrl = "/mymedicine"
+            case TopPage.Medicine:
+                destinationUrl = "/medicine"
                 break
             case TopPage.FirstAid:
                 destinationUrl = "/firstaid"
@@ -120,6 +125,9 @@ export default function MainPageLayout() {
                         setIsLoggedIn(true)
                         setUserInformationData(userInfo)
                     },
+                    showLogInDialog: () => {
+
+                    },
                     logOutUser: () => {
                         setIsLoggedIn(false)
                         setUserInformationData(undefined)
@@ -144,19 +152,46 @@ export default function MainPageLayout() {
                             <MainTopBar className="w-full flex-none py-1 px-4" isShowingSearchBar={false}/>
                             <div className="grow p-2 flex flex-row w-full max-h-full min-h-0">
                                 <div className="hidden lg:flex px-2 flex-col justify-center w-28 h-full">
-                                    {SideMenuOption(TopPage.Home, (<HomeIcon />), LanguageTranslations.pageHome.getTranslation(currentUserLanguage))}
-                                    {SideMenuOption(TopPage.Knowledge, (<img src={KnowledgeIconDark}  alt="Knowledge Page" width={24} height={24} />), LanguageTranslations.pageKnowledge.getTranslation(currentUserLanguage))}
-                                    {SideMenuOption(TopPage.MyMedicine, (<img src={MedicineIconDark} alt="My Medicine" width={24} height={24} />), LanguageTranslations.pageMyMedicine.getTranslation(currentUserLanguage))}
-                                    {SideMenuOption(TopPage.EmergencyContacts, (<img src={AmbulanceIconDark} alt="Emergency Contacts" width={24} height={24} />), LanguageTranslations.pageEmergencyContacts.getTranslation(currentUserLanguage))}
+                                    {SideMenuOption(TopPage.Home, (
+                                        <HomeIcon/>), LanguageTranslations.pageHome.getTranslation(currentUserLanguage))}
+                                    {SideMenuOption(TopPage.Knowledge, (
+                                        <img src={KnowledgeIconDark} alt="Knowledge Page" width={24}
+                                             height={24}/>), LanguageTranslations.pageKnowledge.getTranslation(currentUserLanguage))}
+                                    {SideMenuOption(TopPage.Medicine, (
+                                        <img src={MedicineIconDark} alt="Medicine" width={24}
+                                             height={24}/>), LanguageTranslations.pageMedicine.getTranslation(currentUserLanguage))}
+                                    {SideMenuOption(TopPage.EmergencyContacts, (
+                                        <img src={AmbulanceIconDark} alt="Emergency Contacts" width={24}
+                                             height={24}/>), LanguageTranslations.pageEmergencyContacts.getTranslation(currentUserLanguage))}
                                 </div>
 
-                                <div className="px-1 w-full flex-shrink min-w-0">
-                                    <div className="w-full h-full flex flex-row">
-                                        <div className="grow h-full w-full overflow-y-auto">
-                                            <Outlet />
+                                <div className={`px-1 w-full flex-shrink min-w-0 relative`}>
+
+                                    {/* Small screens - Show AIChatSpace as overlay */}
+                                    {isShowingAIPane && (
+                                        <div
+                                            className="fixed inset-0 z-50 bg-gray-950/80 bg-black lg:hidden flex justify-center items-center p-6">
+                                            <div className="my-6 mx-4 h-full w-full bg-gray-950 p-2 rounded-xl">
+                                                <AIChatSpace
+                                                    className="h-full"
+                                                    onCloseAIChatSpace={() => setIsShowingAIPane(false)}
+                                                />
+                                            </div>
                                         </div>
+                                    )}
+
+                                    <div className="w-full h-full flex flex-row">
+
+                                        <div className="grow h-full w-full flex flex-col">
+                                            {pageBreadcrumb}
+                                            <div className="grow h-full w-full overflow-y-auto">
+                                                <Outlet/>
+                                            </div>
+                                        </div>
+
+                                        {/* Large screens - Show AIChatSpace to the right */}
                                         {isShowingAIPane && (
-                                            <div className="ms-1 h-full hidden lg:block w-2/5">
+                                            <div className="ms-1 h-full hidden lg:block 2xl:w-2/5 w-3/5">
                                                 <AIChatSpace
                                                     className="h-full"
                                                     onCloseAIChatSpace={() => setIsShowingAIPane(false)}
@@ -164,6 +199,8 @@ export default function MainPageLayout() {
                                             </div>
                                         )}
                                     </div>
+
+                                    {/* Button to open AIChatSpace */}
                                     {!isShowingAIPane && (
                                         <Button
                                             className="absolute bottom-1 right-1 mr-4 mb-4 py-3 px-5 rounded-xl"
@@ -174,6 +211,7 @@ export default function MainPageLayout() {
                                         </Button>
                                     )}
                                 </div>
+
                             </div>
                         </SpeakProvider>
                     </AIContext.Provider>

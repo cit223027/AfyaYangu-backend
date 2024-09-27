@@ -1,6 +1,7 @@
-
 // Medicine Class
-export class Medicine {
+import {AppLanguage} from "@/context/AppLanguageContext.ts";
+
+export default class Medicine {
     medicine_id?: string;
     image_src?: string;
     english_name: string;
@@ -25,5 +26,24 @@ export class Medicine {
         this.kikuyu_name = kikuyu_name;
         this.side_effects = side_effects;
         this.treats = treats;
+    }
+
+    getTranslatedName(appLanguage: AppLanguage): string {
+        switch (appLanguage) {
+            case AppLanguage.English:
+                return this.english_name
+            case AppLanguage.Swahili:
+                if (this.swahili_name !== undefined) {
+                    return this.swahili_name
+                } else {
+                    return this.english_name
+                }
+            case AppLanguage.Kikuyu:
+                if (this.kikuyu_name !== undefined) {
+                    return this.kikuyu_name
+                } else {
+                    return this.english_name
+                }
+        }
     }
 }
