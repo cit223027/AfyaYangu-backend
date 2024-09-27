@@ -52,7 +52,7 @@ class ChatGptHelper:
             client = OpenAI(
                 api_key= 'sk-proj-' + ChatGptHelper.api_key_secret_1 + '-' + ChatGptHelper.api_key_secret_2 + ChatGptHelper.api_key_secret_3 + ChatGptHelper.api_key_secret_4,
             ),
-            messages = request.conversation
+            messages = conversation
         )
 
     @staticmethod
