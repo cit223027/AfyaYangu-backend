@@ -25,4 +25,4 @@ def health():
 
 app.include_router(ai_router)
 app.include_router(data_router)
-app.include_router(sms_routers)
+app.include_router(sms_router)
