@@ -14,10 +14,10 @@ RUN npm install
 COPY . .
 
 # Build the application (compile TypeScript and bundle with Vite)
-RUN npm run build
+# RUN npm run build
 
 # Expose the port that Vite uses (default is 5173)
 EXPOSE 5173
 
 # Start the application in preview mode to serve the production build
-CMD ["npm", "run", "preview"]
+CMD ["npm", "run", "dev"]
