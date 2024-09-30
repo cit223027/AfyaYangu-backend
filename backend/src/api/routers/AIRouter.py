@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from api.models.PromptRequestModel import PromptRequestModel
 from api.models.PromptResponseModel import PromptResponseModel
+from services.openai.AfyaYanguOpenAIAssistant import AfyaYanguOpenAIAssistant
 from services.openai.ChatGptHelper import ChatGptHelper
 
 ai_router = APIRouter(prefix = "/ai", tags = ["Engine"])
@@ -16,10 +17,16 @@ def handle_base_prompt(request: PromptRequestModel) -> PromptResponseModel:
 
     return response
 
-@ai_router.post("/prompt", response_model=PromptResponseModel)
+@ai_router.post("/assistant_prompt", response_model=PromptResponseModel)
 def handle_prompt(request: PromptRequestModel) -> PromptResponseModel:
+    response = AfyaYanguOpenAIAssistant.create_afya_yangu_assistant_request(request)
 
-    pass
+    print("AIRouter: assistant_prompt", response)
+    return PromptResponseModel(
+        language = "english",
+        message = response
+    )
+
 
 
 @ai_router.get("/image_prompt", response_model=PromptRequestModel)

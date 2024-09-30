@@ -56,6 +56,9 @@ function EnglishArticle() {
                                                 (isTrueLandmark) => {
                                                     if (isTrueLandmark) {
                                                         addNumberOfPushups()
+                                                        console.log("Found a true landmark")
+                                                    } else {
+                                                        console.log("Found a false landmark")
                                                     }
                                                 }
                                             )

@@ -16,8 +16,6 @@ from services.openai.function_calling.user_medication_function_calls import get_
 class ChatGptHelper:
     assistant_name = "AfyaYangu"
 
-    api_key_secret = "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"
-
     api_key_secret_1 = "t9lFOGYXMZ0rcpMssZqK0lQx2yxdbReird" # -
     api_key_secret_2 = "TC7KAL_Q0Owp77wVw0PoGPZH1T-B161TL03GRfYT3BlbkFJmmB" # ''
     api_key_secret_3 = "-nxX35Ia8hLUcJx8dUkzMx5b1MXm9jBatEkGGa8jvur" # _
@@ -40,7 +38,7 @@ class ChatGptHelper:
         """
         Sends a request to the assistant and handles function calls or responses.
 
-        :param request:
+        :param conversation: The current conversation between the user and the assistant
         :return: PromptResponseModel with the assistant's response and any actions taken
         """
         return ChatGptHelper._create_base_model_request(
@@ -62,9 +60,6 @@ class ChatGptHelper:
                 messages = [message.to_open_ai_message() for message in messages],
                 tools=ChatGptHelper.function_call_tools
             )
-
-            print("ChatGPTHelper: Chat response obtained:")
-            print(response)
 
             return ChatGptHelper._handle_response(client, messages, response, model)
         except Exception as e:
@@ -183,80 +178,6 @@ class ChatGptHelper:
                 }
             }
         },
-
-
-        {
-            "type": "function",
-            "function": {
-                "name": "get_all_medicine_function_call",
-                "description": "Retrieve all medicines from the database.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {},
-                    "required": [],
-                    "additionalProperties": False
-                }
-            }
-        },
-        {
-            "type": "function",
-            "function": {
-                "name": "get_medicine_function_call",
-                "description": "Retrieve details of a specific medicine.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "medicine_id": {
-                            "type": "string",
-                            "description": "The ID of the medicine."
-                        }
-                    },
-                    "required": ["medicine_id"],
-                    "additionalProperties": False
-                }
-            }
-        },
-        {
-            "type": "function",
-            "function": {
-                "name": "upsert_medicine_function_call",
-                "description": "Create or update a medicine in the database.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "medicine_id": {
-                            "type": "string",
-                            "description": "The ID of the medicine (optional for new medicines)."
-                        },
-                        "english_name": {
-                            "type": "string",
-                            "description": "The English name of the medicine."
-                        },
-                        "swahili_name": {
-                            "type": "string",
-                            "description": "The Swahili name of the medicine (optional)."
-                        },
-                        "kikuyu_name": {
-                            "type": "string",
-                            "description": "The Kikuyu name of the medicine (optional)."
-                        },
-                        "side_effects": {
-                            "type": "array",
-                            "items": { "type": "string" },
-                            "description": "List of side effects caused by the medicine."
-                        },
-                        "treats": {
-                            "type": "array",
-                            "items": { "type": "string" },
-                            "description": "List of conditions treated by the medicine."
-                        }
-                    },
-                    "required": ["english_name", "side_effects", "treats"],
-                    "additionalProperties": False
-                }
-            }
-        },
-
 
         {
             "type": "function",

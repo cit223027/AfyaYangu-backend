@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "train_pose_model": "node ./training/train_pose_model.js"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "^0.10.16",
@@ -31,6 +32,7 @@
     "firebase-tools": "^13.18.0",
     "lucide-react": "^0.441.0",
     "next-themes": "^0.3.0",
+    "papaparse": "^5.4.1",
     "react": "^18.3.1",
     "react-audio-voice-recorder": "^2.2.0",
     "react-dom": "^18.3.1",
@@ -43,6 +45,7 @@
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@types/node": "^22.5.5",
+    "@types/papaparse": "^5.3.14",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",

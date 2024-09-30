@@ -142,6 +142,9 @@ export default class BreadCrumbGenerator {
                 return LanguageTranslations.knowledgeMentalHealthDepressionTitle
             case "dyslexia":
                 return LanguageTranslations.knowledgeMentalHealthDyslexiaTitle
+            case "training":
+            case "train_pose":
+                return LanguageTranslations.training
             default:
                 return LanguageTranslations.pageHome
         }

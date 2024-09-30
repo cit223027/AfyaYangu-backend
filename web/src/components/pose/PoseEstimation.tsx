@@ -7,7 +7,7 @@ export type Pose = {
     landmarks: PoseWorldLandmark[]
 }
 
-type PoseWorldLandmark = {
+export type PoseWorldLandmark = {
     x: number;
     y: number;
     z: number;
@@ -16,7 +16,7 @@ type PoseWorldLandmark = {
 
 export type PoseAnalyzer = {
     initialize: () => void;
-    isReadyForAnalysis: boolean;
+    checkIfReadyForAnalysis: () => boolean;
     analyzePose: (poses: Pose[]) => void;
 };
 
@@ -147,7 +147,7 @@ export default function PoseEstimation({
 
     const analyzeEstimatedPose = (poses: NormalizedLandmark[][]) => {
         poseAnalyzers.forEach((analyzer) => {
-            if (analyzer.isReadyForAnalysis) {
+            if (analyzer.checkIfReadyForAnalysis()) {
                 const newPose: Pose[] = poses.map((pose) => {
                     return {
                         landmarks: pose.map((landmark) => {
@@ -268,7 +268,7 @@ export default function PoseEstimation({
 
     const handleStartEstimation = () => {
         setCanStartPoseEstimation(true);
-        initializePoseEstimator(); // Only initialize the model after the user accepts
+        initializePoseEstimator()// Only initialize the model after the user accepts
     };
 
     useEffect(() => {

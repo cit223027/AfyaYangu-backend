@@ -153,17 +153,17 @@ function SwahiliArticle() {
         <SpeakPage>
             <SpeakParagraph>
                 <p>
-                    Ugonjwa wa Kifafa cha Utambuzi wa Mfumo (ASD) ni hali ya ukuaji inayohusisha mawasiliano, tabia, na mwingiliano wa kijamii. Huwa inajitokeza kwa kila mtu kwa njia tofauti, na ukali wa dalili unaweza kutofautiana sana. Kuelewa autism na kutambua dalili zake za mapema kunaweza kusaidia kuboresha msaada na matokeo bora kwa watu walio kwenye mfumo wa autism.
+                    Ugonjwa wa Usonji (Autism Spectrum Disorder (ASD)) ni hali ya ukuaji inayohusisha mawasiliano, tabia, na mwingiliano wa kijamii. Huwa inajitokeza kwa kila mtu kwa njia tofauti, na ukali wa dalili unaweza kutofautiana sana. Kuelewa autism na kutambua dalili zake za mapema kunaweza kusaidia kuboresha msaada na matokeo bora kwa watu walio kwenye mfumo wa autism.
                 </p>
             </SpeakParagraph>
 
             <SpeakDiv>
                 <SpeakDivHeading>
-                    <h3>Kutambua Autism kwa Watoto</h3>
+                    <h3>Kutambua Usonji kwa Watoto</h3>
                 </SpeakDivHeading>
                 <SpeakParagraph>
                     <p>
-                        Kutambua autism mapema ni muhimu ili kuhakikisha watoto wanapata msaada unaofaa. Dalili mara nyingi huonekana katika utoto wa mapema, kawaida kufikia umri wa miaka miwili au mitatu. Ingawa autism hujitokeza tofauti kwa kila mtoto, baadhi ya ishara za kawaida ni pamoja na:
+                        Kutambua usonji mapema ni muhimu ili kuhakikisha watoto wanapata msaada unaofaa. Dalili mara nyingi huonekana katika utoto wa mapema, kawaida kufikia umri wa miaka miwili au mitatu. Ingawa autism hujitokeza tofauti kwa kila mtoto, baadhi ya ishara za kawaida ni pamoja na:
                     </p>
                 </SpeakParagraph>
                 <ul className="ms-4 my-2">
@@ -187,11 +187,11 @@ function SwahiliArticle() {
 
             <SpeakDiv>
                 <SpeakDivHeading>
-                    <h3>Sababu za Autism</h3>
+                    <h3>Sababu za Usonji</h3>
                 </SpeakDivHeading>
                 <SpeakParagraph>
                     <p>
-                        Sababu halisi za autism bado hazijaeleweka kikamilifu, lakini utafiti unaonyesha mchanganyiko wa sababu za kijeni na mazingira. Baadhi ya sababu zinazoweza kuchangia ni pamoja na:
+                        Sababu halisi za usonji bado hazijaeleweka kikamilifu, lakini utafiti unaonyesha mchanganyiko wa sababu za kijeni na mazingira. Baadhi ya sababu zinazoweza kuchangia ni pamoja na:
                     </p>
                 </SpeakParagraph>
                 <ul className="ms-4 my-2">
@@ -209,11 +209,11 @@ function SwahiliArticle() {
 
             <SpeakDiv>
                 <SpeakDivHeading>
-                    <h3>Kushughulika na Autism</h3>
+                    <h3>Kushughulika na Usonji</h3>
                 </SpeakDivHeading>
                 <SpeakParagraph>
                     <p>
-                        Kushughulika na autism kunahusisha kuunda mikakati ya kibinafsi ambayo inawasaidia watu kuhimili maisha ya kila siku. Mbinu zinaweza kutofautiana kulingana na nguvu, changamoto, na mahitaji maalum ya mtu. Baadhi ya mikakati ya ufanisi ni pamoja na:
+                        Kushughulika na usonji kunahusisha kuunda mikakati ya kibinafsi ambayo inawasaidia watu kuhimili maisha ya kila siku. Mbinu zinaweza kutofautiana kulingana na nguvu, changamoto, na mahitaji maalum ya mtu. Baadhi ya mikakati ya ufanisi ni pamoja na:
                     </p>
                 </SpeakParagraph>
                 <ul className="ms-4 my-2">

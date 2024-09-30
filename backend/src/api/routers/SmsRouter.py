@@ -7,6 +7,7 @@ from api.models.PromptRequestModel import PromptRequestModel, PromptConversation
 from api.models.SmsIncomingMessageModel import SmsIncomingMessageModel
 from services.africastalking.AfricasTalkingRepository import AfricasTalkingRepository
 from services.africastalking.USSDService import UssdService
+from services.openai.AfyaYanguOpenAIAssistant import AfyaYanguOpenAIAssistant
 from services.openai.ChatGptHelper import ChatGptHelper
 
 africas_talking_repository = AfricasTalkingRepository()
@@ -21,13 +22,16 @@ def notify_incoming_message(
     request_message = f"Origin: SMS Sender: {from_}\n{text}"
 
     # Send prompt to the model
-    response = ChatGptHelper.send_base_model_request(
-        conversation=[
-            PromptConversationMessage(
-                role="user",
-                message=request_message
-            )
-        ]
+    response = AfyaYanguOpenAIAssistant.create_afya_yangu_assistant_request(
+        request = PromptRequestModel(
+            language="english",
+            conversation=[
+                PromptConversationMessage(
+                    role = "user",
+                    message = request_message
+                )
+            ]
+        )
     )
 
     # Send the response back to the sender

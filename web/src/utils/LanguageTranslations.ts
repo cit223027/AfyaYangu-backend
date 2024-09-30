@@ -171,5 +171,7 @@ export const LanguageTranslations = {
     articleNoTranslation: new LanguageTranslation('No Available Translation', 'Hakuna tafsiri inayopatikana', 'G\u0169t\u0129r\u0129 \u0169horo na G\u0129k\u0169y\u0169'),
     articleNoTranslationDescription: new LanguageTranslation('The article is not available in English. Please use the available language options', 'Makala hayapatikani kwa Kiingereza. Tafadhali tumia chaguo za lugha zinazopatikana', 'Uhoro uyu utiandikatwo na Gikuyu. Nu utumire na ruthiomi rugi'),
 
+    training: new LanguageTranslation('Training', 'Training', 'Training'),
+
 }
 

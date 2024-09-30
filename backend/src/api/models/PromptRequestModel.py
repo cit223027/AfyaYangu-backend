@@ -24,3 +24,7 @@ class PromptRequestModel(BaseModel):
     userContext: str = None
     chatContext: str = None
 
+    def __init__(self, language: str, conversation: List[PromptConversationMessage], **data: any):
+        super().__init__(**data)
+        self.language = language
+        self.conversation = conversation

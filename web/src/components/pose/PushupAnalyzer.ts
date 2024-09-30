@@ -9,11 +9,12 @@ export default class PushupAnalyzer {
     ): PoseAnalyzer {
         let model: tf.LayersModel | null = null;
         let isReadyForAnalysis = false;
+        let wasPreviouslyTrue = false;
 
         const initialize = async (): Promise<void> => {
             try {
                 // Load the model (ensure the correct path to your model)
-                model = await tf.loadLayersModel('/models/pushup_model/model.json');
+                model = await tf.loadLayersModel('/models/pushup_model/pose_model.json');
                 isReadyForAnalysis = true;
                 console.log('Model loaded successfully');
             } catch (error) {
@@ -23,7 +24,9 @@ export default class PushupAnalyzer {
         };
 
         const analyzePose = (poses: Pose[]): void => {
+            console.log("Pushup Analyzer: analyzing pose...")
             if (!model || poses.length !== 1) {
+                console.log("Pushup Analyzer: returning at first if")
                 return
             }
 
@@ -49,13 +52,24 @@ export default class PushupAnalyzer {
             const isLandmarkTrue = predictionResult[0] > 0.5; // Threshold at 0.5 for binary classification
 
             isReadyForAnalysis = true
-            onAnalysis(isLandmarkTrue)
+
+            // Prevents multiple counts of true until a false is recognized
+            if (isLandmarkTrue) {
+                if (wasPreviouslyTrue) {
+                    onAnalysis(false)
+                } else {
+                    onAnalysis(true)
+                }
+            } else {
+                onAnalysis(isLandmarkTrue)
+            }
+            wasPreviouslyTrue = isLandmarkTrue
         };
 
         return {
-            initialize,
-            isReadyForAnalysis,
-            analyzePose,
+            initialize: initialize,
+            checkIfReadyForAnalysis: () => { return isReadyForAnalysis },
+            analyzePose: analyzePose
         };
 
     }

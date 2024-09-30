@@ -35,9 +35,9 @@ import FirstAidFaintingPage from "@/pages/knowledge/firstaid/FirstAidFaintingPag
 import FirstAidNoseBleedPage from "@/pages/knowledge/firstaid/FirstAidNoseBleedPage.tsx";
 import KnowledgeExercisePage from "@/pages/knowledge/KnowledgeExercisePage.tsx";
 import ExercisePushUpPage from "@/pages/knowledge/exercise/ExercisePushUpsPage.tsx";
-import MedicineMedicinePage from "@/pages/medicine/MedicineMedicinePage.tsx";
 import MedicinePrescriptionsPage from "@/pages/medicine/MedicinePrescriptionsPage.tsx";
 import MedicineUserMedicationPage from "@/pages/medicine/MedicineUserMedicationPage.tsx";
+import PoseTrainingPage from "@/pages/training/PoseTrainingPage.tsx";
 
 export default function App() {
 
@@ -180,16 +180,16 @@ export default function App() {
                     element: <FirstAidNoseBleedPage />
                 },
                 {
-                    path: '/medicine/medicine',
-                    element: <MedicineMedicinePage />
-                },
-                {
                     path: '/medicine/prescription',
                     element: <MedicinePrescriptionsPage />
                 },
                 {
                     path: '/medicine/user_medication',
                     element: <MedicineUserMedicationPage />
+                },
+                {
+                    path: '/training/train_pose',
+                    element: <PoseTrainingPage />
                 }
             ]
         }
