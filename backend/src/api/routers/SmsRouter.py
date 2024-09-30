@@ -45,4 +45,4 @@ def handle_ussd(
     :return:
     """
 
-    UssdService.handle_ussd_request(africas_talking_repository, text, phone_number)
+    return UssdService.handle_ussd_request(africas_talking_repository, text, phone_number)
