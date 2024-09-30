@@ -44,5 +44,9 @@ def handle_ussd(
 
     :return:
     """
+    print("/sms/ussd request phone_number: ", phone_number, " text: ", text)
 
-    return UssdService.handle_ussd_request(africas_talking_repository, text, phone_number)
+    response = UssdService.handle_ussd_request(africas_talking_repository, text, phone_number)
+    print("sms/ussd response: ", response)
+
+    return "END Welcome to afyayangu"
