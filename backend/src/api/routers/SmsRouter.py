@@ -35,18 +35,18 @@ def notify_incoming_message(
 
 @sms_router.post("/ussd")
 def handle_ussd(
-        session_id: Annotated[str, Form(alias="sessionId")],
-        phone_number: Annotated[str, Form(alias="phoneNumber")],
+        sessionId: Annotated[str, Form(alias="sessionId")],
+        phoneNumber: Annotated[str, Form(alias="phoneNumber")],
         text: Annotated[str, Form(alias="text")]
-):
+) -> str:
     """
 
 
     :return:
     """
-    print("/sms/ussd request phone_number: ", phone_number, " text: ", text)
+    print("/sms/ussd request phone_number: ", phoneNumber, " text: ", text)
 
-    response = UssdService.handle_ussd_request(africas_talking_repository, text, phone_number)
+    response = UssdService.handle_ussd_request(africas_talking_repository, text, phoneNumber)
     print("sms/ussd response: ", response)
 
     return "END Welcome to afyayangu"
