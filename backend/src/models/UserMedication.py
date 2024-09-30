@@ -18,7 +18,7 @@ class IntakeMealInstruction(str, Enum):
 class UserMedication(BaseModel):
     user_medication_id: Optional[str]
     user_id: str
-    medication_id: str
+    medicine_name: str
     dosage_type: DosageType
     dosage_period: DosagePeriod
     dosages_per_period: int

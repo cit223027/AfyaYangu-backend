@@ -3,6 +3,10 @@ import {Button} from "@/components/ui/button.tsx";
 import {PoseLandmarker, FilesetResolver, DrawingUtils, NormalizedLandmark} from "@mediapipe/tasks-vision"
 import {Card, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 
+export type Pose = {
+    landmarks: PoseWorldLandmark[]
+}
+
 type PoseWorldLandmark = {
     x: number;
     y: number;
@@ -10,10 +14,10 @@ type PoseWorldLandmark = {
     visibility: number;
 };
 
-type PoseAnalyzer = {
+export type PoseAnalyzer = {
     initialize: () => void;
     isReadyForAnalysis: boolean;
-    analyzePose: (poseWorldLandmarks: PoseWorldLandmark[]) => void;
+    analyzePose: (poses: Pose[]) => void;
 };
 
 type PoseEstimationProps = {
@@ -28,21 +32,52 @@ type PoseEstimationProps = {
 };
 
 export default function PoseEstimation({
-                                           id,
-                                           className,
-                                           numPoses = 1,
-                                           minPoseDetectionConfidence = 0.5,
-                                           minPosePresenceConfidence = 0.5,
-                                           minTrackingConfidence = 0.5,
-                                           outputSegmentationMasks = false,
-                                           poseAnalyzers = [],
-                                       }: PoseEstimationProps) {
+    id,
+    className,
+    numPoses = 1,
+    minPoseDetectionConfidence = 0.65,
+    minPosePresenceConfidence = 0.65,
+    minTrackingConfidence = 0.65,
+    outputSegmentationMasks = false,
+    poseAnalyzers = [],
+}: PoseEstimationProps) {
     const [hasAvailableCamera, setHasAvailableCamera] = useState(false);
     const [isCameraPermissionRequested, setIsCameraPermissionRequested] = useState(false);
     const [isCameraPermissionGranted, setIsCameraPermissionGranted] = useState(false);
     const [canStartPoseEstimation, setCanStartPoseEstimation] = useState(false);
     const [isLoadingPoseEstimation, setIsLoadingPoseEstimation] = useState(false);
     const [errorLoadingPoseEstimation, setErrorLoadingPoseEstimation] = useState<string | null>(null);
+
+    // TODO: Remove
+    const [currentPoseLandmarks, setCurrentPoseLandmarks] = useState<Pose[]>([])
+    const [truePoseLandmarks, setTruePoseLandmarks] = useState<Pose[]>([])
+    const [falsePoseLandmarks, setFalsePoseLandmarks] = useState<Pose[]>([])
+
+    const addTruePoseLandmarks = () => {
+        if (currentPoseLandmarks.length === 0) return;
+
+        if (currentPoseLandmarks.length === 1) {
+            truePoseLandmarks.push(currentPoseLandmarks[0]);
+        }else {
+            console.log("More than one landmark!!!")
+        }
+
+        setTruePoseLandmarks(truePoseLandmarks);
+    }
+
+    const addFalsePoseLandmarks = () => {
+        if (currentPoseLandmarks.length === 0) return;
+
+        if (currentPoseLandmarks.length === 1) {
+            console.log("Adding false landmark")
+            console.log(falsePoseLandmarks)
+            falsePoseLandmarks.push(currentPoseLandmarks[0]);
+        } else {
+            console.log("More than one landmark!!!")
+        }
+
+        setFalsePoseLandmarks(falsePoseLandmarks);
+    }
 
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -68,6 +103,11 @@ export default function PoseEstimation({
                 minTrackingConfidence,
                 outputSegmentationMasks,
             });
+
+            // initialize analyzers
+            poseAnalyzers.forEach((poseAnalyzer) => {
+                poseAnalyzer.initialize()
+            })
 
             setIsLoadingPoseEstimation(false);
             startPoseEstimation(); // Start estimation once the model is loaded
@@ -105,20 +145,82 @@ export default function PoseEstimation({
         analyzePose();
     };
 
-    const analyzeEstimatedPose = (poses: NormalizedLandmark[]) => {
+    const analyzeEstimatedPose = (poses: NormalizedLandmark[][]) => {
         poseAnalyzers.forEach((analyzer) => {
             if (analyzer.isReadyForAnalysis) {
-                const newPoses: PoseWorldLandmark[] = poses.map((pose) => {
+                const newPose: Pose[] = poses.map((pose) => {
                     return {
-                        x: pose.x,
-                        y: pose.y,
-                        z: pose.z,
-                        visibility: pose.visibility,
+                        landmarks: pose.map((landmark) => {
+                            return {
+                                x: landmark.x,
+                                y: landmark.y,
+                                z: landmark.z,
+                                visibility: landmark.visibility,
+                            }
+                        })
                     };
                 });
-                analyzer.analyzePose(newPoses);
+                analyzer.analyzePose(newPose);
             }
         });
+
+        setCurrentPoseLandmarks(poses.map((pose) => {
+            return {
+                landmarks: pose.map((landmark) => {
+                    return {
+                        x: landmark.x,
+                        y: landmark.y,
+                        z: landmark.z,
+                        visibility: landmark.visibility,
+                    }
+                })
+        };
+        }))
+    };
+
+    const printCSVFile = () => {
+        // Get current date and time for the file name
+        const now = new Date();
+        const month = now.getMonth() + 1; // Months are zero-indexed
+        const date = now.getDate();
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        const fileName = `pushups-${month}-${date}-${hour}-${minute}.csv`;
+
+        // Combine true and false landmarks with a boolean indicating if it's a true landmark
+        const allLandmarks = [
+            ...truePoseLandmarks.map(pose => ({ ...pose, isTrueLandmark: true })),
+            ...falsePoseLandmarks.map(pose => ({ ...pose, isTrueLandmark: false })),
+        ];
+
+        // Create CSV header for 33 landmarks
+        let csvHeader = "";
+        for (let i = 1; i <= 33; i++) {
+            csvHeader += `x${i},y${i},z${i},visibility${i},`;
+        }
+        csvHeader += "isTrueLandmark\n"; // Add the final header column for the boolean
+
+        // Create CSV content
+        let csvContent = csvHeader;
+        allLandmarks.forEach(pose => {
+            // Collect all the values for the 33 landmarks
+            const { landmarks } = pose;
+            const landmarkValues = landmarks.map(l => `${l.x},${l.y},${l.z},${l.visibility}`).join(",");
+
+            // Add the true/false for whether it's a true pose
+            csvContent += `${landmarkValues},${pose.isTrueLandmark}\n`;
+        });
+
+        // Create a Blob and trigger download
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", fileName);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     };
 
     const drawEstimatedPose = (landmarks: NormalizedLandmark[][]) => {
@@ -180,38 +282,56 @@ export default function PoseEstimation({
     }, []);
 
     return (
-        <div id={id} className={`relative rounded-lg border bg-black w-[800px] h-[600px] ${className}`}>
+        <div id={id} className={`relative rounded-lg border bg-black w-[400px] h-[350px] lg:w-[800px] lg:h-[700px] ${className}`}>
             {/* Grayed background overlay */}
-            <div className="absolute inset-0 bg-gray-800 opacity-75 z-10"></div>
+            <div className="absolute inset-0 bg-gray-800 opacity-75 w-[400px] h-[300px] lg:w-[800px] lg:h-[600px] z-10"></div>
+
+            <div className="absolute bottom-0 w-full z-12">
+                <div className="w-full flex flex-row justify-evenly">
+                    <Button className="" variant="default" onClick={() => addTruePoseLandmarks()}>
+                        Save as True
+                    </Button>
+
+                    <Button className="" variant="secondary" onClick={() => addFalsePoseLandmarks()}>
+                        Save as False
+                    </Button>
+                </div>
+                <div className="w-full flex flex-row justify-center">
+                    <Button className="" variant="default" onClick={() => printCSVFile()}>
+                        Print File
+                    </Button>
+                </div>
+            </div>
 
             {/* Video and Canvas elements always present in the DOM */}
-            <video ref={videoRef} className="absolute top-0 left-0 z-0" autoPlay playsInline width="800" height="600" />
-            <canvas ref={canvasRef} className="absolute top-0 left-0 z-0" width="800" height="600" />
+            <video ref={videoRef} className="absolute top-0 left-0 z-0 w-[400px] h-[300px] lg:w-[800px] lg:h-[600px]" autoPlay playsInline width="800px" height="600px" />
+            <canvas ref={canvasRef} className="absolute top-0 left-0 z-0 w-[400px] h-[300px] lg:w-[800px] lg:h-[600px]" width="800px" height="600px"/>
+
 
             {/* Conditional rendering for prompts, always overlaying */}
             {!isCameraPermissionGranted && !isCameraPermissionRequested ? (
                 <div className="absolute inset-0 flex items-center justify-center z-20">
-                    <AskCameraPermission requestCameraPermission={requestCameraPermission} />
+                    <AskCameraPermission requestCameraPermission={requestCameraPermission}/>
                 </div>
             ) : !hasAvailableCamera ? (
                 <div className="absolute inset-0 flex items-center justify-center z-20">
-                    <WebcamNotAvailable />
+                    <WebcamNotAvailable/>
                 </div>
             ) : !isCameraPermissionGranted ? (
                 <div className="absolute inset-0 flex items-center justify-center z-20">
-                    <CameraPermissionDenied />
+                    <CameraPermissionDenied/>
                 </div>
             ) : isLoadingPoseEstimation ? (
                 <div className="absolute inset-0 flex items-center justify-center z-20">
-                    <LoadingPoseEstimation />
+                    <LoadingPoseEstimation/>
                 </div>
             ) : errorLoadingPoseEstimation ? (
                 <div className="absolute inset-0 flex items-center justify-center z-20">
-                    <ErrorLoadingPoseEstimation error={errorLoadingPoseEstimation} />
+                    <ErrorLoadingPoseEstimation error={errorLoadingPoseEstimation}/>
                 </div>
             ) : !canStartPoseEstimation ? (
                 <div className="absolute inset-0 flex items-center justify-center z-20">
-                    <AskStartPoseEstimation setCanStartPoseEstimation={handleStartEstimation} />
+                    <AskStartPoseEstimation setCanStartPoseEstimation={handleStartEstimation}/>
                 </div>
             ) : null}
         </div>
@@ -223,7 +343,8 @@ function CameraPermissionDenied() {
         <Card className="">
             <CardHeader>
                 <CardTitle>Camera Permission Denied</CardTitle>
-                <CardDescription>You have denied camera access. Please enable it to use pose estimation.</CardDescription>
+                <CardDescription>You have denied camera access. Please enable it to use pose
+                    estimation.</CardDescription>
             </CardHeader>
         </Card>
     );
@@ -240,7 +361,7 @@ function WebcamNotAvailable() {
     );
 }
 
-function AskCameraPermission({ requestCameraPermission }: { requestCameraPermission: () => void }) {
+function AskCameraPermission({requestCameraPermission}: { requestCameraPermission: () => void }) {
     return (
         <Card className="">
             <CardHeader>

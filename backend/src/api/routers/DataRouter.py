@@ -2,11 +2,9 @@ from fastapi import APIRouter
 
 from api.models.MedicalCenterModels import FilterDistanceMedicalCenterRequestModel, ClosestMedicalCenterRequestModel
 from models.MedicalCenter import MedicalCenter
-from models.Medicine import Medicine
 from models.Prescription import Prescription
 from models.UserMedication import UserMedication
 from services.firebase.MedicalCenterFirebaseRepository import MedicalCenterFirebaseRepository
-from services.firebase.MedicineFirebaseRepository import MedicineFirebaseRepository
 from services.firebase.PrescriptionFirebaseRepository import PrescriptionFirebaseRepository
 from services.firebase.UserMedicationRepository import UserMedicationRepository
 
@@ -15,29 +13,6 @@ data_router = APIRouter(prefix="/data", tags=["Data"])
 @data_router.get("/health")
 async def health():
     return { "status": "ok" }
-
-
-## Medicine
-@data_router.get("/medicines")
-async def get_medicines():
-    medicines = MedicineFirebaseRepository.get_all_medicines()
-    return {
-        "data": medicines
-    }
-
-@data_router.get("/medicine/{medicine_id}")
-async def get_medicine(medicine_id: str):
-    medicine = MedicineFirebaseRepository.get_medicine(medicine_id)
-    return {
-        "data": medicine
-    }
-
-@data_router.post("/medicine/")
-async def upsert_new_medicine(medicine: Medicine):
-    medicine_id = MedicineFirebaseRepository.upsert_medicine(medicine)
-    return {
-        "data": medicine_id
-    }
 
 
 ## User Medication

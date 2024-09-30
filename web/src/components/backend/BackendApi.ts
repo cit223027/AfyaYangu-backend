@@ -1,6 +1,5 @@
 import {AppLanguage} from "@/context/AppLanguageContext.ts";
 import AIConversationMessage from "@/components/ai/AIConversationMessage.ts";
-import Medicine from "@/models/Medicine.ts";
 import UserMedication from "@/models/UserMedication.ts";
 import {MedicalCenter} from "@/models/MedicalCenter.ts";
 import Prescription from "@/models/Prescription.ts";
@@ -88,71 +87,6 @@ export default class BackendApi {
     }
 
     /* Data Prompts */
-
-    /* Medicine */
-    // <editor-fold desc="Medicine API calls">
-    static async getAllMedicines(): Promise<Medicine[] | undefined> {
-        try {
-            const response = await fetch(`${BACKEND_SITE}/data/medicines`, {
-                method: 'GET'
-            })
-
-            if (!response.ok) {
-                console.error("Failed to fetch All Medicine", response.status, response.statusText);
-                return undefined;
-            }
-
-            const data = await response.json();
-
-            return data.data
-        } catch (e) {
-            console.error("Error querying all medicine", e)
-            return undefined;
-        }
-    }
-
-    static async getMedicine(medicine_id: string): Promise<Medicine | undefined> {
-        try {
-            const response = await fetch(`${BACKEND_SITE}/data/medicine/${medicine_id}`, {
-                method: 'GET'
-            });
-
-            if (!response.ok) {
-                console.error(`Failed to fetch Medicine with ID: ${medicine_id}`, response.status, response.statusText);
-                return undefined;
-            }
-
-            const data = await response.json();
-            return data.data;
-        } catch (e) {
-            console.error(`Error fetching medicine with ID: ${medicine_id}`, e);
-            return undefined;
-        }
-    }
-
-    static async upsertNewMedicine(medicine: Medicine): Promise<string | undefined> {
-        try {
-            const response = await fetch(`${BACKEND_SITE}/data/medicine/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(medicine),
-            });
-
-            if (!response.ok) {
-                console.error("Failed to upsert new Medicine", response.status, response.statusText);
-                return undefined;
-            }
-
-            const data = await response.json();
-            return data.data;  // This should return the `medicine_id`
-        } catch (e) {
-            console.error("Error upserting new Medicine", e);
-            return undefined;
-        }
-    }
-    // </editor-fold>
 
     // <editor-fold desc="UserMedication API calls">
     static async getUserMedicationsForUser(user_id: string): Promise<UserMedication[] | undefined> {

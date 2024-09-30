@@ -5,6 +5,9 @@ import SpeakDiv from "@/components/speech/SpeakDiv.tsx";
 import SpeakDivHeading from "@/components/speech/SpeakDivHeading.tsx";
 import PoseEstimation from "@/components/pose/PoseEstimation.tsx";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
+import PushupAnalyzer from "@/components/pose/PushupAnalyzer.ts";
+import {useState} from "react";
+import {Card, CardHeader} from "@/components/ui/card.tsx";
 
 export default function ExercisePushUpPage() {
     return (
@@ -15,6 +18,13 @@ export default function ExercisePushUpPage() {
 }
 
 function EnglishArticle() {
+
+    const [numberOfPushups, setNumberOfPushups] = useState(0)
+
+    const addNumberOfPushups = () => {
+        setNumberOfPushups(numberOfPushups + 1);
+    }
+
     return (
         <SpeakPage>
             <SpeakParagraph>
@@ -22,7 +32,7 @@ function EnglishArticle() {
             </SpeakParagraph>
 
             <div className="w-full my-4">
-                <div className="mx-auto w-[800px]">
+                <div className="mx-auto w-[400px] lg:w-[800px]">
                     <Tabs defaultValue="animation" className="">
                         <TabsList className="grid w-full grid-cols-2">
                             <TabsTrigger value="animation">Animation</TabsTrigger>
@@ -40,7 +50,25 @@ function EnglishArticle() {
                         <TabsContent value="vision">
                             <div className={"w-full"}>
                                 <div className="mx-auto">
-                                    <PoseEstimation />
+                                    <PoseEstimation
+                                        poseAnalyzers={[
+                                            PushupAnalyzer.createPushUpAnalyzer(
+                                                (isTrueLandmark) => {
+                                                    if (isTrueLandmark) {
+                                                        addNumberOfPushups()
+                                                    }
+                                                }
+                                            )
+                                        ]}
+                                    />
+                                    <div className="w-full my-2">
+                                        <Card>
+                                            <CardHeader>
+                                                <h4>Exercises Performed:</h4>
+                                                <p>{numberOfPushups}</p>
+                                            </CardHeader>
+                                        </Card>
+                                    </div>
                                 </div>
                             </div>
                         </TabsContent>

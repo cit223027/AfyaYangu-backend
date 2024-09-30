@@ -22,7 +22,7 @@ export enum IntakeMealInstruction {
 export default class UserMedication {
     user_medication_id?: string;
     user_id: string;
-    medication_id: string;
+    medicine_name: string;
     dosage_type: DosageType;
     dosage_period: DosagePeriod;
     dosages_per_period: number;
@@ -32,7 +32,7 @@ export default class UserMedication {
 
     constructor(
         user_id: string,
-        medication_id: string,
+        medicine_name: string,
         dosage_type: DosageType,
         dosage_period: DosagePeriod,
         dosages_per_period: number,
@@ -43,7 +43,7 @@ export default class UserMedication {
     ) {
         this.user_medication_id = user_medication_id;
         this.user_id = user_id;
-        this.medication_id = medication_id;
+        this.medicine_name = medicine_name;
         this.dosage_type = dosage_type;
         this.dosage_period = dosage_period;
         this.dosages_per_period = dosages_per_period;

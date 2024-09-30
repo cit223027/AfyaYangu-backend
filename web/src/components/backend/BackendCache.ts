@@ -37,48 +37,6 @@ export default class BackendCache {
         };
     }
 
-    // Medicine methods
-    async getAllMedicines(): Promise<Medicine[] | undefined> {
-        const now = new Date();
-        if (this.lastAllMedicineUpdateTime && now.getTime() - this.lastAllMedicineUpdateTime.getTime() < this.CACHE_UPDATE_TIME) {
-            return Array.from(this.medicineCache.values()).map(cachedObject => cachedObject.item);
-        }
-
-        const allMedicines = await BackendApi.getAllMedicines();
-        if (allMedicines === undefined) return undefined;
-
-        this.lastAllMedicineUpdateTime = now;
-        allMedicines.forEach(medicine => {
-            this.medicineCache.set(medicine.medicine_id!!, this.generateCacheObject(medicine));
-        });
-
-        return allMedicines;
-    }
-
-    async getMedicine(medicine_id: string): Promise<Medicine | undefined> {
-        const cachedMedicine = this.medicineCache.get(medicine_id);
-        const now = new Date();
-
-        if (cachedMedicine && now.getTime() - cachedMedicine.lastUpdateTime.getTime() < this.CACHE_UPDATE_TIME) {
-            return cachedMedicine.item;
-        }
-
-        const medicine = await BackendApi.getMedicine(medicine_id);
-        if (medicine !== undefined) {
-            this.medicineCache.set(medicine_id, this.generateCacheObject(medicine));
-        }
-
-        return medicine;
-    }
-
-    async upsertNewMedicine(medicine: Medicine): Promise<string | undefined> {
-        const medicine_id = await BackendApi.upsertNewMedicine(medicine);
-        if (medicine_id) {
-            this.medicineCache.delete(medicine.medicine_id!!); // Invalidate cache
-        }
-        return medicine_id;
-    }
-
     // Prescription methods
     async getUserPrescriptions(user_id: string): Promise<Prescription[] | undefined> {
         const now = new Date();

@@ -108,12 +108,12 @@ export const LanguageTranslations = {
     // <editor-fold desc="Knowledge Mental Health Articles">
     knowledgeMentalHealthAnxietyTitle: new LanguageTranslation('Anxiety', '', ''),
     knowledgeMentalHealthAnxietyDescription: new LanguageTranslation('Anxiety', '', ''),
-    knowledgeMentalHealthAutismTitle: new LanguageTranslation('Autism', '', ''),
-    knowledgeMentalHealthAutismDescription: new LanguageTranslation('Autism', '', ''),
-    knowledgeMentalHealthDepressionTitle: new LanguageTranslation('Depression', '', ''),
+    knowledgeMentalHealthAutismTitle: new LanguageTranslation('Autism', 'Usonji', ''),
+    knowledgeMentalHealthAutismDescription: new LanguageTranslation('Autism', 'Usonji', ''),
+    knowledgeMentalHealthDepressionTitle: new LanguageTranslation('Depression', 'Huzuni', ''),
     knowledgeMentalHealthDepressionDescription: new LanguageTranslation('Depression', '', ''),
-    knowledgeMentalHealthDyslexiaTitle: new LanguageTranslation('Dyslexia', '', ''),
-    knowledgeMentalHealthDyslexiaDescription: new LanguageTranslation('Dyslexia', '', ''),
+    knowledgeMentalHealthDyslexiaTitle: new LanguageTranslation('Dyslexia', 'Dyslexia', ''),
+    knowledgeMentalHealthDyslexiaDescription: new LanguageTranslation('Dyslexia', 'Dyslexia', ''),
     knowledgeMentalHealthPtsdTitle: new LanguageTranslation('PTSD', '', ''),
     knowledgeMentalHealthPtsdDescription: new LanguageTranslation('Post Traumatic Stress Disorder', '', ''),
     // </editor-fold>

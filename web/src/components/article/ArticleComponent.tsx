@@ -48,8 +48,8 @@ export default function ArticleComponent({
     function setUpNewLanguage(newAppLanguage: AppLanguage) {
         switch (newAppLanguage) {
             case AppLanguage.English:
-                // setCurrentChosenLanguage(AppLanguage.English)
-                // setIsLackingTranslation(false)
+                setCurrentChosenLanguage(AppLanguage.English)
+                setIsLackingTranslation(false)
                 break;
             case AppLanguage.Swahili:
                 if (hasSwahiliTranslation) {

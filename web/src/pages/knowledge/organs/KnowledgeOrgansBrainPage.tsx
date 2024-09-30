@@ -22,16 +22,17 @@ function EnglishArticle() {
             <div className="w-full h-px">
                 <SpeakDiv>
                     <SpeakParagraph>
-                        <p>The brain is a complex organ that controls thought, memory, emotion, touch, motor skills, vision, breathing, temperature, hunger and every process that regulates our body.</p>
+                        <p>The brain is a complex organ that controls thought, memory, emotion, touch, motor skills, vision, breathing, temperature, hunger, and every process that regulates our body.</p>
                     </SpeakParagraph>
                 </SpeakDiv>
 
+                {/* Structure/Anatomy Section */}
                 <SpeakDiv>
                     <SpeakDivHeading>
-                        <h3>Structure</h3>
+                        <h3>Structure/Anatomy</h3>
                     </SpeakDivHeading>
                     <SpeakParagraph>
-                        <p>The brain can be divided into three parts: cerebrum, brainstem and cerebellum.</p>
+                        <p>The brain can be divided into three parts: cerebrum, brainstem, and cerebellum.</p>
                     </SpeakParagraph>
 
                     <img src="https://www.hopkinsmedicine.org/-/media/images/health/1_-conditions/brain/brain-main-parts.png" alt="Structure of brain" />
@@ -42,46 +43,39 @@ function EnglishArticle() {
                         </SpeakDivHeading>
 
                         <SpeakParagraph>
-                            <p>It is the largest part of the brain and each hemishphere and can be divided into:</p>
+                            <p>The largest part of the brain, the cerebrum, can be divided into different lobes, each with its own functions:</p>
                         </SpeakParagraph>
 
-                        <img src="https://www.hopkinsmedicine.org/-/media/images/health/1_-conditions/brain/brain-lobes-anatomy.jpg" alt="" />
+                        <img src="https://www.hopkinsmedicine.org/-/media/images/health/1_-conditions/brain/brain-lobes-anatomy.jpg" alt="Cerebrum Lobes" />
 
                         <SpeakParagraph>
                             <ul>
-                                <li><strong>Frontal lobe: </strong><span>The largest lobe of the brain, located in the front of the head, the frontal lobe is involved in personality characteristics, decision-making and movement. Recognition of smell usually involves parts of the frontal lobe. The frontal lobe contains Broca’s area, which is associated with speech ability.</span></li>
-                                <li><strong>Parietal lobe: </strong><span>The middle part of the brain, the parietal lobe helps a person identify objects and understand spatial relationships (where one’s body is compared with objects around the person). The parietal lobe is also involved in interpreting pain and touch in the body. The parietal lobe houses Wernicke’s area, which helps the brain understand spoken language.</span></li>
-                                <li><strong>Occipital lobe: </strong><span>The occipital lobe is the back part of the brain that is involved with vision.</span></li>
-                                <li><strong>Temporal lobe: </strong><span>The sides of the brain, temporal lobes are involved in short-term memory, speech, musical rhythm and some degree of smell recognition.</span></li>
+                                <li>• <strong>Frontal lobe:</strong> The largest lobe, responsible for personality, decision-making, and movement. Also contains Broca's area for speech.</li>
+                                <li>• <strong>Parietal lobe:</strong> Helps in identifying objects and understanding spatial relationships. It also processes touch and pain and includes Wernicke's area for language comprehension.</li>
+                                <li>• <strong>Occipital lobe:</strong> Located at the back, it primarily handles vision.</li>
+                                <li>• <strong>Temporal lobe:</strong> Involved in memory, speech, and smell recognition.</li>
                             </ul>
                         </SpeakParagraph>
                     </SpeakDiv>
 
                     <SpeakDiv>
                         <SpeakDivHeading>
-                            <h4>Brian Stem</h4>
+                            <h4>Brainstem</h4>
                         </SpeakDivHeading>
                         <SpeakParagraph>
-                            <p>The brain stem connects the cerebrum with the spinal cord. It includes the midbrain, the pons and
-                                the medulla</p>
+                            <p>The brainstem connects the cerebrum with the spinal cord. It consists of the midbrain, pons, and medulla, each performing specific functions:</p>
                         </SpeakParagraph>
-
 
                         <SpeakDiv>
                             <SpeakDivHeading>
                                 <h5>Midbrain</h5>
                             </SpeakDivHeading>
                             <SpeakParagraph>
-                                <p>The midbrain is a very complex structure with a range of different neuron clusters (nuclei and colliculi), neural pathways and other structures. Its functions include:</p>
-                            </SpeakParagraph>
-
-                            <SpeakParagraph>
                                 <ul>
-                                    <li>Facilitates hearing</li>
-                                    <li>Facilitates movement</li>
-                                    <li>Calculating responses</li>
-                                    <li>Processing environmental changes</li>
-                                    <li>Enables movement and coordination</li>
+                                    <li>• Facilitates hearing</li>
+                                    <li>• Facilitates movement</li>
+                                    <li>• Calculates responses and processes environmental changes</li>
+                                    <li>• Coordinates movement</li>
                                 </ul>
                             </SpeakParagraph>
                         </SpeakDiv>
@@ -90,9 +84,8 @@ function EnglishArticle() {
                             <SpeakDivHeading>
                                 <h5>Pons</h5>
                             </SpeakDivHeading>
-
                             <SpeakParagraph>
-                                <p>The pons is the origin for four of the 12 cranial nerves, which enable a range of activities such as tear production, chewing, blinking, focusing vision, balance, hearing and facial expression.</p>
+                                <p>The pons is responsible for a variety of activities including tear production, chewing, blinking, focusing vision, balance, hearing, and facial expression. It is the origin of four cranial nerves.</p>
                             </SpeakParagraph>
                         </SpeakDiv>
 
@@ -100,19 +93,56 @@ function EnglishArticle() {
                             <SpeakDivHeading>
                                 <h5>Medulla</h5>
                             </SpeakDivHeading>
-
                             <SpeakParagraph>
-                                <p>At the bottom of the brainstem, the medulla is where the brain meets the spinal cord. The medulla is essential to survival. Functions of the medulla regulate many bodily activities, including heart rhythm, breathing, blood flow, and oxygen and carbon dioxide levels. The medulla produces reflexive activities such as sneezing, vomiting, coughing and swallowing.</p>
+                                <p>The medulla, located at the base of the brainstem, regulates essential survival functions like heart rhythm, breathing, and blood flow. It also controls reflex actions such as sneezing, vomiting, and coughing.</p>
                             </SpeakParagraph>
                         </div>
                     </SpeakDiv>
 
                     <SpeakDiv>
-                        <h4>Cerebellum</h4>
+                        <SpeakDivHeading>
+                            <h4>Cerebellum</h4>
+                        </SpeakDivHeading>
                         <SpeakParagraph>
-                            <p>Its function is to coordinate voluntary muscle movements and to maintain posture, balance and equilibrium.</p>
+                            <p>The cerebellum coordinates voluntary muscle movements and helps maintain posture, balance, and equilibrium.</p>
                         </SpeakParagraph>
                     </SpeakDiv>
+                </SpeakDiv>
+
+                {/* Functions Section */}
+                <SpeakDiv>
+                    <SpeakDivHeading>
+                        <h3>Functions</h3>
+                    </SpeakDivHeading>
+                    <SpeakParagraph>
+                        <p>The brain's primary functions include controlling thought, memory, emotion, motor skills, vision, breathing, and many more bodily processes. Each region of the brain contributes to specific functions:</p>
+                    </SpeakParagraph>
+                    <SpeakParagraph>
+                        <ul>
+                            <li>• <strong>Cerebrum:</strong> Handles complex processes like decision-making, emotions, and memory.</li>
+                            <li>• <strong>Brainstem:</strong> Manages basic life functions like breathing, heart rate, and reflexes.</li>
+                            <li>• <strong>Cerebellum:</strong> Coordinates movement and helps maintain balance.</li>
+                        </ul>
+                    </SpeakParagraph>
+                </SpeakDiv>
+
+                {/* Common Complications Section */}
+                <SpeakDiv>
+                    <SpeakDivHeading>
+                        <h3>Common Complications</h3>
+                    </SpeakDivHeading>
+                    <SpeakParagraph>
+                        <p>There are several potential complications and issues related to brain health, including:</p>
+                    </SpeakParagraph>
+                    <SpeakParagraph>
+                        <ul>
+                            <li>• <strong>Traumatic Brain Injury (TBI):</strong> Resulting from impacts to the head, TBIs can affect cognitive and motor functions.</li>
+                            <li>• <strong>Stroke:</strong> A lack of blood flow to the brain can cause damage to brain tissue, leading to paralysis, speech problems, or cognitive impairments.</li>
+                            <li>• <strong>Dementia and Alzheimer’s Disease:</strong> Neurodegenerative disorders that affect memory, thinking, and behavior.</li>
+                            <li>• <strong>Brain Tumors:</strong> Abnormal cell growth in the brain can affect various functions depending on the tumor's location.</li>
+                            <li>• <strong>Epilepsy:</strong> A neurological disorder characterized by recurrent seizures caused by abnormal brain activity.</li>
+                        </ul>
+                    </SpeakParagraph>
                 </SpeakDiv>
             </div>
         </SpeakPage>

@@ -28,7 +28,7 @@ function EnglishArticle() {
                 <div className="bg-white rounded-lg p-2 w-fit mx-auto">
                     <img
                         src="/images/knowledge/diseases/breast_cancer.png"
-                        alt="Kidney Anatomy"
+                        alt="Breast Cancer"
                     />
                 </div>
             </div>

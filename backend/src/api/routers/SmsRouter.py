@@ -6,6 +6,7 @@ from starlette.formparsers import FormMessage
 from api.models.PromptRequestModel import PromptRequestModel, PromptConversationMessage
 from api.models.SmsIncomingMessageModel import SmsIncomingMessageModel
 from services.africastalking.AfricasTalkingRepository import AfricasTalkingRepository
+from services.africastalking.USSDService import UssdService
 from services.openai.ChatGptHelper import ChatGptHelper
 
 africas_talking_repository = AfricasTalkingRepository()
@@ -32,3 +33,16 @@ def notify_incoming_message(
     # Send the response back to the sender
     africas_talking_repository.send_message(recipient=from_, message=response.message)
 
+@sms_router.post("/ussd")
+def handle_ussd(
+        session_id: Annotated[str, Form(alias="sessionId")],
+        phone_number: Annotated[str, Form(alias="phoneNumber")],
+        text: Annotated[str, Form(alias="text")]
+):
+    """
+
+
+    :return:
+    """
+
+    UssdService.handle_ussd_request(africas_talking_repository, text, phone_number)
