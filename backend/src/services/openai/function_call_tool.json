@@ -57,80 +57,6 @@
     }
   },
 
-
-  {
-    "type": "function",
-    "function": {
-      "name": "get_all_medicine_function_call",
-      "description": "Retrieve all medicines from the database.",
-      "parameters": {
-        "type": "object",
-        "properties": {},
-        "required": [],
-        "additionalProperties": false
-      }
-    }
-  },
-  {
-    "type": "function",
-    "function": {
-      "name": "get_medicine_function_call",
-      "description": "Retrieve details of a specific medicine.",
-      "parameters": {
-        "type": "object",
-        "properties": {
-          "medicine_id": {
-            "type": "string",
-            "description": "The ID of the medicine."
-          }
-        },
-        "required": ["medicine_id"],
-        "additionalProperties": false
-      }
-    }
-  },
-  {
-    "type": "function",
-    "function": {
-      "name": "upsert_medicine_function_call",
-      "description": "Create or update a medicine in the database.",
-      "parameters": {
-        "type": "object",
-        "properties": {
-          "medicine_id": {
-            "type": "string",
-            "description": "The ID of the medicine (optional for new medicines)."
-          },
-          "english_name": {
-            "type": "string",
-            "description": "The English name of the medicine."
-          },
-          "swahili_name": {
-            "type": "string",
-            "description": "The Swahili name of the medicine (optional)."
-          },
-          "kikuyu_name": {
-            "type": "string",
-            "description": "The Kikuyu name of the medicine (optional)."
-          },
-          "side_effects": {
-            "type": "array",
-            "items": { "type": "string" },
-            "description": "List of side effects caused by the medicine."
-          },
-          "treats": {
-            "type": "array",
-            "items": { "type": "string" },
-            "description": "List of conditions treated by the medicine."
-          }
-        },
-        "required": ["english_name", "side_effects", "treats"],
-        "additionalProperties": false
-      }
-    }
-  },
-
-
   {
     "type": "function",
     "function": {
@@ -179,9 +105,9 @@
             "type": "string",
             "description": "The ID of the user."
           },
-          "medication_id": {
+          "medicine_name": {
             "type": "string",
-            "description": "The ID of the medication."
+            "description": "The name of the medicine."
           },
           "dosage_type": {
             "type": "string",
