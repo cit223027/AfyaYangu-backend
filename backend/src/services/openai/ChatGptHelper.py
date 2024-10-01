@@ -1,4 +1,7 @@
 import json
+from fastapi import HTTPException
+import base64
+import requests
 from http.client import responses
 
 from openai import AssistantEventHandler, OpenAI
@@ -47,6 +50,54 @@ class ChatGptHelper:
             ),
             messages = conversation
         )
+
+    @staticmethod
+    def send_prescription_extraction_request(base64_image: str):
+        """
+        Sends the base64-encoded image to ChatGPT and asks for the prescription details.
+
+        :param base64_image: The base64-encoded image of the prescription
+        :return: Extracted description of the prescription from the image
+        """
+
+        api_key= 'sk-proj-' + ChatGptHelper.api_key_secret_1 + '-' + ChatGptHelper.api_key_secret_2 + ChatGptHelper.api_key_secret_3 + ChatGptHelper.api_key_secret_4,
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}"
+        }
+
+        payload = {
+            "model": "gpt-4o-mini",  # or any appropriate model
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": "Extract all details contained in the prescription below. This can include medicine information, patient information and dosage information."
+                        },
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:image/jpeg;base64,{base64_image}"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "max_tokens": 500
+        }
+
+        try:
+            response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+
+            if response.status_code == 200:
+                return response.json()  # Return the response from ChatGPT
+            else:
+                raise HTTPException(status_code=response.status_code, detail=response.text)
+
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
 
     @staticmethod
     def _create_base_model_request(

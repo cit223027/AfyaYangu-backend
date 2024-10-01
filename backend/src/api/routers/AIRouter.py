@@ -1,8 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, UploadFile, File, HTTPException
 from api.models.PromptRequestModel import PromptRequestModel
 from api.models.PromptResponseModel import PromptResponseModel
 from services.openai.AfyaYanguOpenAIAssistant import AfyaYanguOpenAIAssistant
 from services.openai.ChatGptHelper import ChatGptHelper
+import base64
 
 ai_router = APIRouter(prefix = "/ai", tags = ["Engine"])
 
@@ -26,6 +27,26 @@ def handle_prompt(request: PromptRequestModel) -> PromptResponseModel:
         language = "english",
         message = response
     )
+
+@ai_router.post("/base_prescription")
+async def handle_prescription(image: UploadFile = File(...)) -> str:
+    """
+    FastAPI endpoint to accept an image, encode it, and extract prescription details.
+    """
+    try:
+        # Read the image file and encode it to base64
+        image_data = await image.read()
+        base64_image = base64.b64encode(image_data).decode('utf-8')
+
+        # Call the prescription extraction function
+        response = ChatGptHelper.send_prescription_extraction_request(base64_image)
+
+        # Return the response from ChatGPT
+        return response
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")
+
 
 
 

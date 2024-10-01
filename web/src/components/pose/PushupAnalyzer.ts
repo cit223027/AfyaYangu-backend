@@ -10,6 +10,7 @@ export default class PushupAnalyzer {
         let model: tf.LayersModel | null = null;
         let isReadyForAnalysis = false;
         let wasPreviouslyTrue = false;
+        let canProcessTrue = true; // New flag to control delay
 
         const initialize = async (): Promise<void> => {
             try {
@@ -25,14 +26,10 @@ export default class PushupAnalyzer {
 
         const analyzePose = (poses: Pose[]): void => {
             if (!model || poses.length !== 1) {
-                // console.log("Pushup Analyzer: returning at first if")
-                return
+                return;
             }
 
-            isReadyForAnalysis = true
-
             // Assuming poses contain a list of Pose objects, extract landmarks
-            // Flatten the PoseWorldLandmark into an array of [x, y, z, visibility] for all 33 landmarks
             const inputArray: number[] = poses[0].landmarks.flatMap((landmark) => [
                 landmark.x,
                 landmark.y,
@@ -50,26 +47,29 @@ export default class PushupAnalyzer {
             // Assuming the model returns a binary classification (0 or 1)
             const isLandmarkTrue = predictionResult[0] > 0.5; // Threshold at 0.5 for binary classification
 
-            isReadyForAnalysis = true
-
-            // Prevents multiple counts of true until a false is recognized
             if (isLandmarkTrue) {
-                if (wasPreviouslyTrue) {
-                    onAnalysis(false)
+                if (wasPreviouslyTrue || !canProcessTrue) {
+                    onAnalysis(false); // Ignore subsequent 'true' within 2 seconds
                 } else {
-                    onAnalysis(true)
+                    onAnalysis(true);
+                    canProcessTrue = false; // Block further 'true' values for 500ms
+                    setTimeout(() => {
+                        canProcessTrue = true; // Allow another 'true' after 500ms
+                    }, 500);
                 }
             } else {
-                onAnalysis(isLandmarkTrue)
+                onAnalysis(false);
             }
-            wasPreviouslyTrue = isLandmarkTrue
+
+            wasPreviouslyTrue = isLandmarkTrue;
         };
 
         return {
             initialize: initialize,
-            checkIfReadyForAnalysis: () => { return isReadyForAnalysis },
+            checkIfReadyForAnalysis: () => isReadyForAnalysis,
             analyzePose: analyzePose
         };
-
     }
+
 }
+
