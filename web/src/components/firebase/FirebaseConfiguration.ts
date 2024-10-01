@@ -20,8 +20,10 @@ const myFirebaseConfig = {
 
 export class FirebaseConfiguration {
 
+    // @ts-ignore
     private firebaseApp: FirebaseApp | undefined = undefined
 
+    // @ts-ignore
     private isFirebaseInitialized: boolean = false;
     private firebaseAuth: Auth
     private googleProvider = new GoogleAuthProvider()

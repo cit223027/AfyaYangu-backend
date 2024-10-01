@@ -24,9 +24,8 @@ export default class PushupAnalyzer {
         };
 
         const analyzePose = (poses: Pose[]): void => {
-            console.log("Pushup Analyzer: analyzing pose...")
             if (!model || poses.length !== 1) {
-                console.log("Pushup Analyzer: returning at first if")
+                // console.log("Pushup Analyzer: returning at first if")
                 return
             }
 

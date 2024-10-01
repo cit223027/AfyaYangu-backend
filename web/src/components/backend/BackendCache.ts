@@ -1,4 +1,3 @@
-import Medicine from "@/models/Medicine.ts";
 import UserMedication from "@/models/UserMedication.ts";
 import BackendApi from "@/components/backend/BackendApi.ts";
 import {MedicalCenter} from "@/models/MedicalCenter.ts";
@@ -13,10 +12,6 @@ type ClosestMedicalCentersCacheKey = string;
 
 export default class BackendCache {
     CACHE_UPDATE_TIME = 10 * 60 * 1000; // 10 minutes in milliseconds
-
-    // Medicine cache
-    private lastAllMedicineUpdateTime: Date | null = null;
-    private medicineCache: Map<string, CacheObject<Medicine>> = new Map();
 
     // Prescription cache
     private prescriptionCache: Map<string, CacheObject<Prescription>> = new Map();

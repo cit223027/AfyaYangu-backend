@@ -29,6 +29,7 @@ type PoseEstimationProps = {
     minTrackingConfidence?: number;
     outputSegmentationMasks?: boolean;
     poseAnalyzers?: PoseAnalyzer[];
+    showDevUi?: boolean
 };
 
 export default function PoseEstimation({
@@ -40,6 +41,7 @@ export default function PoseEstimation({
     minTrackingConfidence = 0.65,
     outputSegmentationMasks = false,
     poseAnalyzers = [],
+    showDevUi = false
 }: PoseEstimationProps) {
     const [hasAvailableCamera, setHasAvailableCamera] = useState(false);
     const [isCameraPermissionRequested, setIsCameraPermissionRequested] = useState(false);
@@ -48,7 +50,6 @@ export default function PoseEstimation({
     const [isLoadingPoseEstimation, setIsLoadingPoseEstimation] = useState(false);
     const [errorLoadingPoseEstimation, setErrorLoadingPoseEstimation] = useState<string | null>(null);
 
-    // TODO: Remove
     const [currentPoseLandmarks, setCurrentPoseLandmarks] = useState<Pose[]>([])
     const [truePoseLandmarks, setTruePoseLandmarks] = useState<Pose[]>([])
     const [falsePoseLandmarks, setFalsePoseLandmarks] = useState<Pose[]>([])
@@ -282,26 +283,28 @@ export default function PoseEstimation({
     }, []);
 
     return (
-        <div id={id} className={`relative rounded-lg border bg-black w-[400px] h-[350px] lg:w-[800px] lg:h-[700px] ${className}`}>
+        <div id={id} className={`relative rounded-lg border bg-black w-[400px] lg:w-[800px] ${showDevUi ? " h-[350px] lg:h-[700px]" : "h-[300px] lg:h-[600px]" } ${className}`}>
             {/* Grayed background overlay */}
             <div className="absolute inset-0 bg-gray-800 opacity-75 w-[400px] h-[300px] lg:w-[800px] lg:h-[600px] z-10"></div>
 
-            <div className="absolute bottom-0 w-full z-12">
-                <div className="w-full flex flex-row justify-evenly">
-                    <Button className="" variant="default" onClick={() => addTruePoseLandmarks()}>
-                        Save as True
-                    </Button>
+            {showDevUi && (
+                <div className="absolute bottom-0 w-full z-12">
+                    <div className="w-full flex flex-row justify-evenly">
+                        <Button className="" variant="default" onClick={() => addTruePoseLandmarks()}>
+                            Save as True
+                        </Button>
 
-                    <Button className="" variant="secondary" onClick={() => addFalsePoseLandmarks()}>
-                        Save as False
-                    </Button>
+                        <Button className="" variant="secondary" onClick={() => addFalsePoseLandmarks()}>
+                            Save as False
+                        </Button>
+                    </div>
+                    <div className="w-full flex flex-row justify-center">
+                        <Button className="" variant="default" onClick={() => printCSVFile()}>
+                            Print File
+                        </Button>
+                    </div>
                 </div>
-                <div className="w-full flex flex-row justify-center">
-                    <Button className="" variant="default" onClick={() => printCSVFile()}>
-                        Print File
-                    </Button>
-                </div>
-            </div>
+            )}
 
             {/* Video and Canvas elements always present in the DOM */}
             <video ref={videoRef} className="absolute top-0 left-0 z-0 w-[400px] h-[300px] lg:w-[800px] lg:h-[600px]" autoPlay playsInline width="800px" height="600px" />

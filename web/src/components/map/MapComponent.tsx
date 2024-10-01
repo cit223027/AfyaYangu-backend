@@ -42,7 +42,7 @@ export default function MapComponent({
     const API_KEY2 = "64hJKov4nBGnU"
     const API_KEY3 = "617wkjoRdIUlSjM"
 
-    const [hoveredMarkerId, setHoveredMarkerId] = useState<string | null>(null)
+    const [_hoveredMarkerId, setHoveredMarkerId] = useState<string | null>(null)
     const [selectedMarker, setSelectedMarker] = useState<SelectedMapMarker | null>(null);
     const [infoWindowShown, setInfoWindowShown] = useState(false);
     const [userLocation, setUserLocation] = useState<google.maps.LatLngLiteral | null>(null);

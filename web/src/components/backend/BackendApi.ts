@@ -39,7 +39,7 @@ export default class BackendApi {
                 userContext: userContext
             }
 
-            const response = await fetch(`${BACKEND_SITE}/ai/base_completion`, {
+            const response = await fetch(`${BACKEND_SITE}/ai/assistant_prompt`, {
                 method: 'POST',
                 body: JSON.stringify(requestBody),
                 headers: {

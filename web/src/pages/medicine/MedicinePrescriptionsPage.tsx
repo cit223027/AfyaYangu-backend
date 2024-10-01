@@ -6,7 +6,9 @@ import UserNotLoggedIn from "@/components/user/UserNotLoggedIn.tsx";
 
 export default function MedicinePrescriptionsPage() {
 
+    // @ts-ignore
     const { appLanguage } = useContext(AppLanguageContext);
+    // @ts-ignore
     const { showLogInDialog, isLoggedIn, userInformation } = useContext(UserInformationContext)
 
     return (

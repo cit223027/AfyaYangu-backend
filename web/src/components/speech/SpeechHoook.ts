@@ -1,11 +1,11 @@
 import {useContext, useState} from "react";
 import {AppLanguage, AppLanguageContext} from "@/context/AppLanguageContext.ts";
-import { useSpeech } from "react-text-to-speech";
 
 type SpeechHookProps = {
 
 }
 
+// @ts-ignore
 type SpeechHookResult = {
     isRecording: boolean,
     speechResult: string
@@ -17,7 +17,7 @@ export function useSpeechRecorder(): SpeechHookProps {
 
     const {appLanguage} = useContext(AppLanguageContext)
     const [isRecording, setIsRecording] = useState<boolean>(false)
-    const [speechResult, setSpeechResult] = useState("")
+    const [speechResult, _setSpeechResult] = useState("")
 
 
     const startRecording = () => {

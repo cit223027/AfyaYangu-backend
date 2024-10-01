@@ -22,7 +22,8 @@ function EnglishArticle() {
     const [numberOfPushups, setNumberOfPushups] = useState(0)
 
     const addNumberOfPushups = () => {
-        setNumberOfPushups(numberOfPushups + 1);
+        // console.log("Adding number of pushups");
+        setNumberOfPushups((prevNumber) => prevNumber + 1);
     }
 
     return (
@@ -56,9 +57,9 @@ function EnglishArticle() {
                                                 (isTrueLandmark) => {
                                                     if (isTrueLandmark) {
                                                         addNumberOfPushups()
-                                                        console.log("Found a true landmark")
+                                                        // console.log("Found a true landmark")
                                                     } else {
-                                                        console.log("Found a false landmark")
+                                                        // console.log("Found a false landmark")
                                                     }
                                                 }
                                             )
