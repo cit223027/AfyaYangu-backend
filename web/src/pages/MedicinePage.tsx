@@ -3,6 +3,7 @@ import {Card, CardContent, CardHeader} from "@/components/ui/card.tsx";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Input} from "@/components/ui/input.tsx";
+import Markdown from "react-markdown";
 
 export default function MedicinePage() {
     const [cameraImage, setCameraImage] = useState<string | null>(null);
@@ -119,7 +120,7 @@ export default function MedicinePage() {
                             {response && (
                                 <div className="mt-4 mx-2 p-2 border rounded-xl">
                                     <h3 className="andika-bold text-lg">Response:</h3>
-                                    <p>{response}</p>
+                                    <Markdown>{response}</Markdown>
                                 </div>
                             )}
                         </CardContent>

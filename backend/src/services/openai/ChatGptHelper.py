@@ -60,7 +60,7 @@ class ChatGptHelper:
         :return: Extracted description of the prescription from the image
         """
 
-        api_key= 'sk-proj-' + ChatGptHelper.api_key_secret_1 + '-' + ChatGptHelper.api_key_secret_2 + ChatGptHelper.api_key_secret_3 + ChatGptHelper.api_key_secret_4,
+        api_key = 'sk-proj-' + ChatGptHelper.api_key_secret_1 + '-' + ChatGptHelper.api_key_secret_2 + ChatGptHelper.api_key_secret_3 + ChatGptHelper.api_key_secret_4
         headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {api_key}"
@@ -92,7 +92,15 @@ class ChatGptHelper:
             response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
 
             if response.status_code == 200:
-                return response.json()  # Return the response from ChatGPT
+                response_data = response.json()  # Get the full response JSON
+                # print("send_prescription_extraction_request: success", response_data)
+
+                # Extract the assistant's message content
+                if 'choices' in response_data and len(response_data['choices']) > 0:
+                    assistant_message = response_data['choices'][0]['message']['content']
+                    return assistant_message  # Return only the text response from the model
+                else:
+                    raise HTTPException(status_code=500, detail="Invalid response structure from the model.")
             else:
                 raise HTTPException(status_code=response.status_code, detail=response.text)
 
