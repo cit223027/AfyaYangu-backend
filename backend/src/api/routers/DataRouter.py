@@ -10,7 +10,7 @@ from services.firebase.MedicalCenterFirebaseRepository import MedicalCenterFireb
 from services.firebase.PrescriptionFirebaseRepository import PrescriptionFirebaseRepository
 from services.firebase.UserMedicationRepository import UserMedicationRepository
 
-firebase_app = firebase_admin.get_app()
+firebase_app = FirebaseInitializer.initialize_firebase()
 
 data_router = APIRouter(prefix="/data", tags=["Data"])
 

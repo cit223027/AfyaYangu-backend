@@ -7,7 +7,6 @@ from api.routers.DataRouter import data_router
 from api.routers.SmsRouter import sms_router
 from services.firebase.FirebaseInitializer import FirebaseInitializer
 
-firebase_app = FirebaseInitializer.initialize_firebase()
 
 app = FastAPI.FastAPI(title = "AfyaYangu")
 app.add_middleware(
