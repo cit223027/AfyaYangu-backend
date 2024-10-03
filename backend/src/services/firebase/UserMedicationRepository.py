@@ -1,5 +1,7 @@
 from typing import Optional, List
 from firebase_admin import firestore
+from google.cloud.firestore_v1 import FieldFilter
+
 from models.UserMedication import UserMedication
 from services.firebase.FirebaseInitializer import FirebaseInitializer
 
@@ -17,8 +19,9 @@ class UserMedicationRepository:
         :param user_id: The user ID to retrieve medications for
         :return: List of UserMedication objects
         """
-        docs = UserMedicationRepository.get_user_medication_reference(firebase_app).where('user_id', '==', user_id).stream()
-        user_medications = [UserMedication(**doc.to_dict()) for doc in docs]
+        docs = UserMedicationRepository.get_user_medication_reference(firebase_app).where(filter = FieldFilter('user_id', '==', user_id)).stream()
+
+        user_medications = [UserMedication.from_dict(doc.to_dict()) for doc in docs if doc.exists]
         return user_medications
 
     @staticmethod

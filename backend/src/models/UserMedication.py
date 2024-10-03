@@ -16,7 +16,7 @@ class IntakeMealInstruction(str, Enum):
     after_meal = "after_meal"
 
 class UserMedication(BaseModel):
-    user_medication_id: Optional[str]
+    user_medication_id: Optional[str] = None
     user_id: str
     medicine_name: str
     dosage_type: DosageType
@@ -31,7 +31,7 @@ class UserMedication(BaseModel):
         return UserMedication(
             user_medication_id=data['user_medication_id'],
             user_id=data['user_id'],
-            medication_id=data['medication_id'],
+            medicine_name=data['medicine_name'],
             dosage_type=data['dosage_type'],
             dosage_period=data['dosage_period'],
             dosages_per_period=data['dosages_per_period'],
@@ -44,7 +44,7 @@ class UserMedication(BaseModel):
         return {
             'user_medication_id': self.user_medication_id,
             'user_id': self.user_id,
-            'medication_id': self.medication_id,
+            'medicine_name': self.medicine_name,
             'dosage_type': self.dosage_type,
             'dosage_period': self.dosage_period,
             'dosages_per_period': self.dosages_per_period,
