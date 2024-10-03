@@ -25,7 +25,7 @@ export default function EmergencyContactPage() {
     return (
         <div className="w-full h-full flex flex-col">
             <Tabs defaultValue="mapview" className="grow my-2 flex flex-col">
-                <TabsList className="w-full lg:w-[400px] grid grid-cols-2">
+                <TabsList className="w-full mx-auto lg:w-[400px] grid grid-cols-2">
                     <TabsTrigger value="mapview">Map</TabsTrigger>
                     <TabsTrigger value="listview">List</TabsTrigger>
                 </TabsList>

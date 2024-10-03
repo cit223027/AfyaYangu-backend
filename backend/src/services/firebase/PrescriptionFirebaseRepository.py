@@ -1,4 +1,6 @@
 from typing import List, Optional
+
+import firebase_admin
 from firebase_admin import firestore
 from models.Prescription import Prescription
 from services.firebase.FirebaseInitializer import FirebaseInitializer
@@ -7,13 +9,15 @@ from services.firebase.UserMedicationRepository import UserMedicationRepository
 
 class PrescriptionFirebaseRepository:
 
-    firebase_app = FirebaseInitializer.initialize_firebase()
-    prescription_collection_reference = firestore.client().collection('prescription')
+    @staticmethod
+    def get_prescription_collection_reference(firebase_app: firebase_admin.App):
+        return firestore.client(firebase_app).collection('prescription')
 
     @staticmethod
-    def upsert_prescription(prescription: Prescription) -> str:
+    def upsert_prescription(firebase_app, prescription: Prescription) -> str:
         """
         Inserts or Updates a prescription into the prescription collection.
+        :param firebase_app:
         :param prescription: Prescription to be inserted or updated.
         :return: prescription_id of the inserted or updated prescription.
         """
@@ -30,22 +34,22 @@ class PrescriptionFirebaseRepository:
 
         if prescription.prescription_id is None:
             # This is a new prescription
-            _, new_ref = PrescriptionFirebaseRepository.prescription_collection_reference.add(prescription_data)
+            _, new_ref = PrescriptionFirebaseRepository.get_prescription_collection_reference(firebase_app).add(prescription_data)
             new_ref.update({"prescription_id": new_ref.id})
             return new_ref.id
         else:
             # Updating an existing prescription
-            PrescriptionFirebaseRepository.prescription_collection_reference.document(prescription.prescription_id).update(prescription_data)
+            PrescriptionFirebaseRepository.get_prescription_collection_reference(firebase_app).document(prescription.prescription_id).update(prescription_data)
             return prescription.prescription_id
 
     @staticmethod
-    def get_prescription(prescription_id: str) -> Optional[Prescription]:
+    def get_prescription(firebase_app, prescription_id: str) -> Optional[Prescription]:
         """
         Retrieves a prescription from the prescription collection.
         :param prescription_id: The prescription_id of the prescription to be retrieved.
         :return: The prescription or None if none exists.
         """
-        doc_ref = PrescriptionFirebaseRepository.prescription_collection_reference.document(prescription_id)
+        doc_ref = PrescriptionFirebaseRepository.get_prescription_collection_reference(firebase_app).document(prescription_id)
         doc = doc_ref.get()
         if doc.exists:
             prescription_data = doc.to_dict()
@@ -60,22 +64,23 @@ class PrescriptionFirebaseRepository:
             return None
 
     @staticmethod
-    def get_all_prescriptions() -> List[Prescription]:
+    def get_all_prescriptions(firebase_app) -> List[Prescription]:
         """
         Retrieves all prescriptions from the prescription collection.
         :return: List[Prescription]
         """
-        docs = PrescriptionFirebaseRepository.prescription_collection_reference.stream()
+        docs = PrescriptionFirebaseRepository.get_prescription_collection_reference(firebase_app).stream()
         return PrescriptionFirebaseRepository._get_prescription_information(docs)
 
     @staticmethod
-    def get_prescriptions_by_user(user_id: str) -> List[Prescription]:
+    def get_prescriptions_by_user(firebase_app, user_id: str) -> List[Prescription]:
         """
         Retrieves all prescriptions for a specific user.
+        :param firebase_app:
         :param user_id: The user_id for which prescriptions need to be retrieved.
         :return: List[Prescription]
         """
-        docs = PrescriptionFirebaseRepository.prescription_collection_reference.where("user_id", "==", user_id).stream()
+        docs = PrescriptionFirebaseRepository.get_prescription_collection_reference(firebase_app).where("user_id", "==", user_id).stream()
         return PrescriptionFirebaseRepository._get_prescription_information(docs)
 
     @staticmethod
@@ -90,19 +95,19 @@ class PrescriptionFirebaseRepository:
         return prescriptions
 
     @staticmethod
-    def delete_prescription(prescription_id: str):
+    def delete_prescription(firebase_app, prescription_id: str):
         """
         Deletes a prescription and its associated UserMedications from the database.
         :param prescription_id: The prescription_id of the prescription to be deleted.
         :return: None
         """
         # First, delete associated medications
-        prescription = PrescriptionFirebaseRepository.get_prescription(prescription_id)
+        prescription = PrescriptionFirebaseRepository.get_prescription(firebase_app, prescription_id)
         if prescription:
             for medication in prescription.medications:
                 if medication and medication.user_medication_id:
                     UserMedicationRepository.delete_user_medication(medication.user_medication_id)
 
         # Then delete the prescription
-        doc_ref = PrescriptionFirebaseRepository.prescription_collection_reference.document(prescription_id)
+        doc_ref = PrescriptionFirebaseRepository.get_prescription_collection_reference(firebase_app).document(prescription_id)
         doc_ref.delete()

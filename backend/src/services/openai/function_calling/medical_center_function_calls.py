@@ -1,4 +1,9 @@
+import firebase_admin
+
+from api.routers.DataRouter import firebase_app
 from services.firebase.MedicalCenterFirebaseRepository import MedicalCenterFirebaseRepository
+
+firebase_app = firebase_admin.get_app()
 
 def get_closest_medical_centers_function_call(args: dict):
     latitude = args.get('latitude')
@@ -10,7 +15,7 @@ def get_closest_medical_centers_function_call(args: dict):
             'error': 'Both latitude and longitude are required.'
         }
 
-    closest_centers = MedicalCenterFirebaseRepository.get_closest_medical_centers(latitude, longitude, number_of_centers)
+    closest_centers = MedicalCenterFirebaseRepository.get_closest_medical_centers(firebase_app, latitude, longitude, number_of_centers)
     return {
         'message': 'Closest medical centers retrieved successfully',
         'medical_centers': [center.to_dict() for center in closest_centers]
@@ -18,7 +23,7 @@ def get_closest_medical_centers_function_call(args: dict):
 
 
 def get_all_medical_centers_function_call(args: dict):
-    centers = MedicalCenterFirebaseRepository.get_all_medical_centers()
+    centers = MedicalCenterFirebaseRepository.get_all_medical_centers(firebase_app)
     return {
         'message': 'All medical centers retrieved successfully',
         'medical_centers': [center.to_dict() for center in centers]
@@ -33,7 +38,7 @@ def get_medical_center_function_call(args: dict):
             'error': 'medical_center_id is required.'
         }
 
-    medical_center = MedicalCenterFirebaseRepository.get_medical_center(medical_center_id)
+    medical_center = MedicalCenterFirebaseRepository.get_medical_center(firebase_app, medical_center_id)
 
     if medical_center:
         return {

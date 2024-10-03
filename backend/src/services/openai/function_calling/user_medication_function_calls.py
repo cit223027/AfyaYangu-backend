@@ -1,7 +1,11 @@
 from typing import List, Optional
+
+import firebase_admin
+
 from services.firebase.UserMedicationRepository import UserMedicationRepository
 from models.UserMedication import UserMedication, DosageType, DosagePeriod, IntakeMealInstruction
 
+firebase_app = firebase_admin.get_app()
 
 def get_user_medications_function_call(args: dict):
     user_id = args.get('user_id')
@@ -9,7 +13,7 @@ def get_user_medications_function_call(args: dict):
     if user_id is None:
         return {'error': 'user_id is required'}
 
-    user_medications = UserMedicationRepository.get_user_medications(user_id)
+    user_medications = UserMedicationRepository.get_user_medications(firebase_app, user_id)
     return {
         'message': 'User medications retrieved successfully',
         'user_medications': [med.to_dict() for med in user_medications]
@@ -22,7 +26,7 @@ def get_user_medication_function_call(args: dict):
     if user_medication_id is None:
         return {'error': 'user_medication_id is required'}
 
-    user_medication = UserMedicationRepository.get_user_medication(user_medication_id)
+    user_medication = UserMedicationRepository.get_user_medication(firebase_app, user_medication_id)
     if user_medication:
         return {
             'message': 'User medication retrieved successfully',
@@ -59,6 +63,7 @@ def upsert_user_medication_function_call(args: dict):
         }
 
     new_user_medication_id = UserMedicationRepository.upsert_user_medication(
+        firebase_app,
         UserMedication(
             user_id=user_id,
             medicine_id=medicine_id,
@@ -93,7 +98,7 @@ def delete_user_medication_function_call(args: dict):
             'error': 'user_medication_id is required'
         }
 
-    UserMedicationRepository.delete_user_medication(user_medication_id)
+    UserMedicationRepository.delete_user_medication(firebase_app, user_medication_id)
     return {
         'message': f'User medication {user_medication_id} deleted successfully'
     }

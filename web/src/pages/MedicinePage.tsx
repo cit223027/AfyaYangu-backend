@@ -78,7 +78,7 @@ export default function MedicinePage() {
         <div className="h-full w-full flex flex-col">
             <div className="grow w-full flex flex-col justify-center">
                 <div className="w-full flex flex-row">
-                    <Card className="mx-auto">
+                    <Card className="mx-auto w-4/5 lg:w-3/5 xl:w-1/3">
                         <CardHeader>
                             <h4>Prescription</h4>
                             <p>Upload a prescription image or capture one using your camera.</p>
@@ -120,7 +120,7 @@ export default function MedicinePage() {
                             {response && (
                                 <div className="mt-4 mx-2 p-2 border rounded-xl">
                                     <h3 className="andika-bold text-lg">Response:</h3>
-                                    <Markdown>{response}</Markdown>
+                                    <Markdown>{response.slice(1, -1).replace("\n", " \n ")}</Markdown>
                                 </div>
                             )}
                         </CardContent>

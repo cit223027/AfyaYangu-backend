@@ -74,7 +74,7 @@ class ChatGptHelper:
                     "content": [
                         {
                             "type": "text",
-                            "text": "Extract all details contained in the prescription below. This can include medicine information, patient information and dosage information."
+                            "text": "Extract all details contained in the prescription below. This can include medicine information, patient information and dosage information. Put a space at the end of each line. use"
                         },
                         {
                             "type": "image_url",
