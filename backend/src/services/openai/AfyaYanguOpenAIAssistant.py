@@ -9,7 +9,7 @@ class AfyaYanguOpenAIAssistant:
     @staticmethod
     def create_afya_yangu_assistant_request(request: PromptRequestModel, is_debug: bool = False) -> str:
         client = Client(
-            api_key='sk-proj-' + ChatGptHelper.api_key_secret_1 + '-' + ChatGptHelper.api_key_secret_2 + ChatGptHelper.api_key_secret_3 + ChatGptHelper.api_key_secret_4
+            api_key="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"
         )
         prompt_messages = [message.to_open_ai_message() for message in request.conversation]
 

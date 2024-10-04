@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dialog.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card.tsx";
-import MapComponent from "@/components/map/MapComponent.tsx";
+import MapComponent, {MapMarker} from "@/components/map/MapComponent.tsx";
 
 
 export default function EmergencyContactPage() {
@@ -70,16 +70,13 @@ function ListView() {
 
     useEffect(() => {
         backendCache.getAllMedicalCenters().then((allMedCenters) => {
-            console.log("ListView: All Medical Centers")
-            console.log(allMedCenters)
-
             if (allMedCenters !== undefined) {
                 setAllMedicalCenters(allMedCenters)
                 setFilteredMedicalCenters(allMedCenters)
                 setSearchFilteredMedicalCenters(allMedCenters)
             }
         })
-    })
+    }, [])
 
     const applySearchFilterMedicalCenters = (searchTerm: string) => {
         if (searchTerm.trim() === "") {
@@ -310,9 +307,10 @@ function ListView() {
                     </Button>
                 </div>
             </div>
-            <div className="grow w-full py-2 px-2 overflow-y-auto grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="items-center grow w-full py-2 px-2 overflow-y-auto gap-3 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
                 {searchFilteredMedicalCenters.map((medicalCenter) => (
                     <MedicalCenterCard
+                        className="h-full"
                         key={medicalCenter.medical_center_id}
                         medicalCenter={medicalCenter}
                     />
@@ -325,8 +323,12 @@ function ListView() {
 
 function MedicalCenterCard(
     {
+        id,
+        className,
         medicalCenter
     }: {
+        id?: string
+        className?: string
         medicalCenter: MedicalCenter
     }
 ) {
@@ -355,7 +357,7 @@ function MedicalCenterCard(
     
     
     return (
-        <Card>
+        <Card id={id} className={className}>
             <CardHeader>
                 <CardTitle>{medicalCenter.name}</CardTitle>
                 <CardDescription>{printCenterDescription(appLanguage)}</CardDescription>
@@ -384,11 +386,45 @@ function MedicalCenterCard(
 
 function MapView() {
 
+    const [isLoading, setIsLoading] = useState(true);
+    const [currentMarkers, setCurrentMarkers] = useState<MapMarker[]>([])
+
+    const { backendCache } = useContext(BackendContext)
+
+    useEffect(() => {
+        backendCache.getAllMedicalCenters().then((medicalCenters) => {
+            if (medicalCenters !== undefined) {
+                const markers = medicalCenters.map((medicalCenter) => {
+                    return {
+                        id: medicalCenter.medical_center_id!!,
+                        position: {
+                            lat: medicalCenter.latitude,
+                            lng: medicalCenter.longitude
+                        },
+                        title: medicalCenter.name,
+                        description: medicalCenter.description
+                    }
+                })
+                setCurrentMarkers(markers)
+                setIsLoading(false)
+            }
+        })
+    })
+
     return (
-        <div className="w-full h-full flex flex-col pb-4">
-            <MapComponent
-                className="grow min-h-0 mx-3 mb-4"
-            />
+        <div className="w-full h-full flex flex-col pb-4 mt-2">
+            {!isLoading && (
+                <MapComponent
+                    className="grow min-h-0 mx-3 mb-4"
+                    markers={currentMarkers}
+                />
+            )}
+
+            {isLoading && (
+                <div className="w-full h-full flex flex-col items-center justify-center">
+                    <p>The map is loading...</p>
+                </div>
+            )}
         </div>
     )
 }

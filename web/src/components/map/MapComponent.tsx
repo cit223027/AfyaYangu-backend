@@ -10,7 +10,7 @@ import {useCallback, useState} from "react";
 import {Card, CardFooter, CardHeader} from "@/components/ui/card.tsx";
 import {Button} from "@/components/ui/button.tsx";
 
-type MapMarker = {
+export type MapMarker = {
     id: string;
     position: google.maps.LatLngLiteral;
     title: string;
@@ -33,7 +33,7 @@ type MapComponentProps = {
 export default function MapComponent({
     className,
     defaultZoom = 15,
-    defaultCenter = { lat: -1.286389, lng: 36.817223 },
+    defaultCenter = { lat: -0.426690, lng: 36.954113 },
     markers = []
 }: MapComponentProps) {
 
@@ -131,8 +131,12 @@ export default function MapComponent({
             </div>
         )}
 
-        <APIProvider apiKey={`${API_KEY1}${API_KEY2}-${API_KEY3}`} libraries={['marker']}>
+        <APIProvider
+            apiKey={`${API_KEY1}${API_KEY2}-${API_KEY3}`}
+            libraries={['marker']}
+        >
             <Map
+                mapId="fb83e7da318d20d3"
                 className={`${className}`}
                 defaultZoom={defaultZoom}
                 defaultCenter={mapCenter}
@@ -159,20 +163,25 @@ export default function MapComponent({
                                 glyphColor={selectedMarker && selectedMarker.markerData.id === markerData.id ? '#0f677a' : null}
                             />
                         </AdvancedMarker>
-            )
-            })}
+                    )
+                })}
 
-            {infoWindowShown && selectedMarker && (
-                <InfoWindow
-                    anchor={selectedMarker.marker}
-                    onCloseClick={handleInfoWindowCloseClick}
-                >
-                    <div>
-                        <h2>{selectedMarker?.markerData?.title}</h2>
-                        <p>{selectedMarker?.markerData?.description}</p>
-                    </div>
-                </InfoWindow>
-            )}
+                {infoWindowShown && selectedMarker && (
+                    <InfoWindow
+                        headerContent={(
+                            <div>
+                                <h2 className="andika-bold text-black">{selectedMarker?.markerData?.title}</h2>
+                            </div>
+                        )}
+                        anchor={selectedMarker.marker}
+                        onCloseClick={handleInfoWindowCloseClick}
+                    >
+                        <div className="text-black">
+                            <p className="my-1">{selectedMarker?.markerData?.description}</p>
+                            <p>{selectedMarker?.markerData?.id}</p>
+                        </div>
+                    </InfoWindow>
+                )}
         </Map>
         </APIProvider>
 </>
