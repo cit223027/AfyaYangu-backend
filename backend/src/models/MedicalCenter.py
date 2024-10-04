@@ -36,7 +36,7 @@ class MedicalCenter(BaseModel):
             'swahili_description': self.swahili_description,
             'kikuyu_description': self.kikuyu_description,
             'emergency_mobile_number': self.emergency_mobile_number,
-            'secondary_emergency_mobile': self.secondary_emergency_mobile_number,
+            'secondary_emergency_mobile_number': self.secondary_emergency_mobile_number,
             'latitude': self.latitude,
             'longitude': self.longitude
         }

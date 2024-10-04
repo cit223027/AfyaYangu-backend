@@ -39,7 +39,7 @@ class MedicalCenterFirebaseRepository:
         :return: List of MedicalCenter
         """
         docs = MedicalCenterFirebaseRepository.get_medical_center_collection_reference(firebase_app).stream()
-        medicines = [MedicalCenter.from_dict(**doc.to_dict()) for doc in docs]
+        medicines = [MedicalCenter.from_dict(doc.to_dict()) for doc in docs]
         return medicines
 
     @staticmethod

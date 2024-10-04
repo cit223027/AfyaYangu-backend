@@ -1,14 +1,15 @@
 import {Button} from "@/components/ui/button.tsx";
 import {ExitIcon} from "@radix-ui/react-icons";
 import {LanguageTranslations} from "@/utils/LanguageTranslations.ts";
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {AppLanguage, AppLanguageContext} from "@/context/AppLanguageContext.ts";
-import {Loader2Icon, MicIcon, SendIcon, SpeechIcon} from "lucide-react";
+import {Loader2Icon, MicIcon, MicOffIcon, SendIcon, SpeechIcon} from "lucide-react";
 import {Textarea} from "@/components/ui/textarea.tsx";
 import AIConversationMessage, {AIConversationUser} from "@/components/ai/AIConversationMessage.ts";
 import BackendApi from "@/components/backend/BackendApi.ts";
 import {AIContext} from "@/context/AIContext.ts";
 import Markdown from "react-markdown";
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip.tsx";
 
 type AIChatSpaceProps = {
     className?:string
@@ -28,17 +29,50 @@ export default function AIChatSpace({
     const { appLanguage } = useContext(AppLanguageContext)
     const { pageInformation } = useContext(AIContext)
 
+    const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
+    const [isEnglishRecognitionAvailable, setIsEnglishRecognitionAvailable] = useState(false);
+
     const [conversationMessages, setConversationMessages] = useState<AIConversationMessage[]>([])
     const [loadingMessage, setLoadingMessage] = useState<AILoadingMessage | undefined>(undefined)
     const [textPrompt, setTextPrompt] = useState("")
     const [isListening, setIsListening] = useState(false)
 
-    const handleStartListening = async () => {
+    // useEffect to check for SpeechRecognition availability
+    useEffect(() => {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition) {
+            setIsEnglishRecognitionAvailable(true); // Set availability flag if SpeechRecognition is supported
+        } else {
+            setIsEnglishRecognitionAvailable(false);
+            console.error('SpeechRecognition is not supported in this browser.');
+        }
+    }, []);
 
+    const handleStartListening = async () => {
+        if (appLanguage === AppLanguage.English && isEnglishRecognitionAvailable) {
+            // Check if SpeechRecognition is available in the browser
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (SpeechRecognition) {
+                const recog = new SpeechRecognition();
+                recog.lang = 'en-US';
+
+                recog.onstart = () => setIsListening(true);
+                recog.onend = () => setIsListening(false);
+                recog.onerror = () => setIsListening(false);
+                recog.onresult = (event: SpeechRecognitionEvent) => {
+                    setTextPrompt(event.results[0][0].transcript);
+                };
+
+                setRecognition(recog);
+                recog.start(); // Start the speech recognition process
+            } else {
+                console.error('SpeechRecognition is not supported in this browser.');
+            }
+        }
     }
 
     const handleStopRecording = () => {
-
+        recognition?.stop()
     };
 
     const handleSubmit = () => {
@@ -86,8 +120,12 @@ export default function AIChatSpace({
         }
     };
 
-    const handleSpeak = (_text: string) => {
-
+    const handleSpeak = (text: string) => {
+        if (appLanguage === AppLanguage.English) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            window.speechSynthesis.speak(utterance);
+        }
     }
 
     return (
@@ -102,6 +140,7 @@ export default function AIChatSpace({
                     <ConversationMessageComponent
                         key={index}
                         aiConversationMessage={message}
+                        disableSpeakButton={appLanguage !== AppLanguage.English}
                         onSpeak={(text) => handleSpeak(text)}
                     />
                 ))}
@@ -115,14 +154,31 @@ export default function AIChatSpace({
                 {/* Input fields */}
 
                 {textPrompt === '' && (
-                    <Button
-                        variant={isListening ? "destructive" : "default"}
-                        onClick={isListening ? handleStartListening : handleStopRecording}
-                        className={`transition-all duration-300 ease-in-out ${isListening ? "grow" : "rounded-full"}`}
-                    >
-                        <MicIcon className="w-4 h-4" />
-                        <span className='ms-2'>{LanguageTranslations.speak.getTranslation(appLanguage)}</span>
-                    </Button>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <Button
+                                    variant={isListening ? "destructive" : "default"}
+                                    onClick={isListening ? handleStopRecording : handleStartListening}
+                                    disabled={!isEnglishRecognitionAvailable}
+                                    className={`transition-all duration-300 ease-in-out ${isListening ? "grow" : "rounded-full"}`}
+                                >
+                                    {isListening ? (
+                                        <MicOffIcon className="w-4 h-4" />
+                                    ) : (
+                                        <MicIcon className="w-4 h-4" />
+                                    )}
+
+                                    <span className='ms-2'>{LanguageTranslations.speak.getTranslation(appLanguage)}</span>
+                                </Button>
+                            </TooltipTrigger>
+                            {isEnglishRecognitionAvailable && (
+                                <TooltipContent>
+                                    <p>You browser does not support speech recognition</p>
+                                </TooltipContent>
+                            )}
+                        </Tooltip>
+                    </TooltipProvider>
                 )}
 
                 <Textarea
@@ -173,11 +229,13 @@ function ConversationMessageComponent(
         id,
         className,
         aiConversationMessage,
+        disableSpeakButton = false,
         onSpeak
     }: {
         id?:string
         className?:string
         aiConversationMessage: AIConversationMessage
+        disableSpeakButton?: boolean
         onSpeak: (text: string) => void
     }
 ) {
@@ -188,6 +246,7 @@ function ConversationMessageComponent(
                 id={id}
                 className={className}
                 aiConversationMessage={aiConversationMessage}
+                disableSpeakButton={disableSpeakButton}
                 onSpeak={onSpeak}
             />
         )
@@ -197,6 +256,7 @@ function ConversationMessageComponent(
                 id={id}
                 className={className}
                 aiConversationMessage={aiConversationMessage}
+                disableSpeakButton={disableSpeakButton}
                 onSpeak={onSpeak}
             />
         )
@@ -208,11 +268,13 @@ function ConversationMessageSystemComponent(
         id,
         className,
         aiConversationMessage,
+        disableSpeakButton = false,
         onSpeak
     }:{
         id?: string
         className?: string
         aiConversationMessage: AIConversationMessage
+        disableSpeakButton?: boolean
         onSpeak: (text: string) => void
     }
 ) {
@@ -233,7 +295,11 @@ function ConversationMessageSystemComponent(
                 </div>
             </div>
             <div className="flex flex-col px-2 py-2">
-                <Button variant="ghost" onClick={() => onSpeak(aiConversationMessage.message)}>
+                <Button
+                    variant="ghost"
+                    disabled={disableSpeakButton}
+                    onClick={() => onSpeak(aiConversationMessage.message)}
+                >
                     <SpeechIcon className="h-4 w-4"/>
                 </Button>
             </div>
@@ -246,11 +312,13 @@ function ConversationMessageUserComponent(
         id,
         className,
         aiConversationMessage,
+        disableSpeakButton = false,
         onSpeak
     }:{
         id?: string
         className?: string
         aiConversationMessage: AIConversationMessage
+        disableSpeakButton?: boolean
         onSpeak: (text: string) => void
     }
 ) {
@@ -266,7 +334,11 @@ function ConversationMessageUserComponent(
                 </div>
             </div>
             <div className="flex flex-col px-2 py-2">
-                <Button variant="ghost" onClick={() => onSpeak(aiConversationMessage.message)}>
+                <Button
+                    variant="ghost"
+                    onClick={() => onSpeak(aiConversationMessage.message)}
+                    disabled={disableSpeakButton}
+                >
                     <SpeechIcon className="h-4 w-4"/>
                 </Button>
             </div>

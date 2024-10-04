@@ -1,4 +1,4 @@
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {AppLanguage, AppLanguageContext} from "@/context/AppLanguageContext.ts";
 import {BackendContext} from "@/components/backend/BackendContext.tsx";
 import {Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
@@ -6,7 +6,7 @@ import {MedicalCenter} from "@/models/MedicalCenter.ts";
 import {TabsContent} from "@radix-ui/react-tabs";
 import SearchBar from "@/components/search/SearchBar.tsx";
 import {Button} from "@/components/ui/button.tsx";
-import {FilterIcon} from "lucide-react";
+import {BanIcon, FilterIcon, MapPinIcon} from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -64,8 +64,22 @@ function ListView() {
     const [nearestFilter, setNearestFilter] = useState<MedicalCenterNearestFilter>({});
     const [locationSearchFilter, setLocationSearchFilter] = useState<MedicalCenterLocationSearch>({});
 
+    const [allMedicalCenters, setAllMedicalCenters] = useState<MedicalCenter[]>([])
     const [filteredMedicalCenters, setFilteredMedicalCenters] = useState<MedicalCenter[]>([])
     const [searchFilteredMedicalCenters, setSearchFilteredMedicalCenters] = useState<MedicalCenter[]>([])
+
+    useEffect(() => {
+        backendCache.getAllMedicalCenters().then((allMedCenters) => {
+            console.log("ListView: All Medical Centers")
+            console.log(allMedCenters)
+
+            if (allMedCenters !== undefined) {
+                setAllMedicalCenters(allMedCenters)
+                setFilteredMedicalCenters(allMedCenters)
+                setSearchFilteredMedicalCenters(allMedCenters)
+            }
+        })
+    })
 
     const applySearchFilterMedicalCenters = (searchTerm: string) => {
         if (searchTerm.trim() === "") {
@@ -97,6 +111,13 @@ function ListView() {
         });
     };
 
+    const resetSearchFilters = () => {
+        setFilteredMedicalCenters(allMedicalCenters)
+        setSearchFilteredMedicalCenters(allMedicalCenters)
+        setNearestFilter({})
+        setLocationSearchFilter({})
+    }
+
     const handleGrantLocation = () => {
         navigator.geolocation.getCurrentPosition((position) => {
             const location: MedicalCenterLocation = {
@@ -112,17 +133,82 @@ function ListView() {
     const isNearestFilterValid = nearestFilter.location && nearestFilter.number_of_centers;
     const isLocationSearchFilterValid = locationSearchFilter.location && locationSearchFilter.distance_km;
 
+    const LocationDialogComponents = () => {
+        return (
+            <>
+                {userLocation === null && (
+                    <div className="w-full my-2 p-3 rounded-xl border border-gray-300">
+                        <h6 className="andika-bold mb-1">Grant Location</h6>
+                        <p>Grant the website location access to use this filter</p>
+                        <div className="w-full mt-2 flex flex-row justify-center">
+                            <Button
+                                className="mx-auto"
+                                onClick={handleGrantLocation}
+                            >
+                                <MapPinIcon className="w-4 h-4 me-2"/>
+                                Grant Location Access
+                            </Button>
+                        </div>
+                    </div>
+                )}
+
+                {userLocation !== null && (
+
+                    <div className="w-full my-2 rounded-xl p-2 border border-gray-300">
+                        <div className="w-full flex flex-row justify-center">
+                            <h6 className="andika-bold">Your Location</h6>
+                        </div>
+
+                        <div className="my-2 grid grid-cols-2 space-x-2">
+                            <div>
+                                <p>Latitude:</p>
+                                <Input
+                                    readOnly
+                                    value={userLocation?.latitude || ''}
+                                    placeholder="Latitude"
+                                    className="w-full my-1"
+                                />
+                            </div>
+                            <div>
+                                <p>Latitude:</p>
+                                <Input
+                                    readOnly
+                                    value={userLocation?.longitude || ''}
+                                    placeholder="Longitude"
+                                    className="w-full my-1"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="my-2 w-full flex flex-row justify-center">
+                            <Button
+                                className="mx-auto"
+                                onClick={handleGrantLocation}
+                            >
+                                <MapPinIcon className="w-4 h-4 me-2"/>
+                                Refresh Location
+                            </Button>
+                        </div>
+                    </div>
+                )}
+
+            </>
+        )
+}
+
     return (
         <div className="flex flex-col w-full h-full">
-            <div className="flex flex-row my-2 px-1">
+            <div className="w-full justify-between flex flex-row my-2 px-1">
                 <div></div>
-                <SearchBar onSearch={(searchTerm) => applySearchFilterMedicalCenters(searchTerm)} />
+                <SearchBar
+                    onSearch={(searchTerm) => applySearchFilterMedicalCenters(searchTerm)}
+                />
                 <div className="">
                     <Dialog>
                         <DialogTrigger>
                             <Button>
+                                <FilterIcon className="w-4 h-4 me-2" />
                                 <span>Filters</span>
-                                <FilterIcon />
                             </Button>
                         </DialogTrigger>
                         <DialogContent>
@@ -131,49 +217,32 @@ function ListView() {
                                 <DialogDescription>Filter the medical centers</DialogDescription>
                             </DialogHeader>
 
-                            <div>
+                            <div className="w-full">
                                 <Tabs>
-                                    <TabsList>
+                                    <TabsList className="w-full grid grid-cols-2">
                                         <TabsTrigger value="closest">Closest</TabsTrigger>
                                         <TabsTrigger value="distance">By Distance</TabsTrigger>
                                     </TabsList>
 
                                     {/* Tab for closest medical centers */}
                                     <TabsContent value="closest">
-                                        <div className="">
-                                            <h5>Find Medical Centers closest to you</h5>
-
-                                            <div className="w-full my-2 rounded-xl px-1 mx-2 border border-gray-300">
-                                                <h6>Grant Location</h6>
-                                                <p>Grant the website location access to use this filter</p>
-                                                <Button onClick={handleGrantLocation}>
-                                                    Grant Location Access
-                                                </Button>
+                                        <div className="mt-2">
+                                            <div className="w-full flex flex-row justify-center">
+                                                <h5 className="mx-auto">Find Medical Centers closest to you</h5>
                                             </div>
 
-                                            <div className="w-full my-2 rounded-xl px-1 mx-2 border border-gray-300">
-                                                <h6>Your Location</h6>
-                                                <Input
-                                                    readOnly
-                                                    value={userLocation?.latitude || ''}
-                                                    placeholder="Latitude"
-                                                    className="w-full my-1"
-                                                />
-                                                <Input
-                                                    readOnly
-                                                    value={userLocation?.longitude || ''}
-                                                    placeholder="Longitude"
-                                                    className="w-full my-1"
-                                                />
-                                            </div>
+                                            {LocationDialogComponents()}
 
-                                            <div className="my-2">
-                                                <h6>Number Of Centers</h6>
+                                            <div className="my-3 w-full flex flex-row justify-between items-center space-x-3">
+                                                <h6 className="">Number of centers</h6>
                                                 <Input
                                                     placeholder="Enter number"
                                                     inputMode="numeric"
-                                                    className="w-full"
-                                                    onChange={(e) => setNearestFilter({ ...nearestFilter, number_of_centers: parseInt(e.target.value) })}
+                                                    className="grow w-48 text-end"
+                                                    onChange={(e) => setNearestFilter({
+                                                        ...nearestFilter,
+                                                        number_of_centers: parseInt(e.target.value)
+                                                    })}
                                                 />
                                             </div>
 
@@ -186,8 +255,8 @@ function ListView() {
                                                         }
                                                     }}
                                                 >
+                                                    <FilterIcon className="w-4 h-4 me-2"/>
                                                     <span>Apply Filter</span>
-                                                    <FilterIcon />
                                                 </Button>
                                             </div>
                                         </div>
@@ -195,31 +264,19 @@ function ListView() {
 
                                     {/* Tab for filtering by distance */}
                                     <TabsContent value="distance">
-                                        <div className="">
-                                            <h5>Find Medical Centers within a certain distance</h5>
-
-                                            <div className="w-full my-2 rounded-xl px-1 mx-2 border border-gray-300">
-                                                <h6>Your Location</h6>
-                                                <Input
-                                                    readOnly
-                                                    value={locationSearchFilter.location?.latitude || ''}
-                                                    placeholder="Latitude"
-                                                    className="w-full my-1"
-                                                />
-                                                <Input
-                                                    readOnly
-                                                    value={locationSearchFilter.location?.longitude || ''}
-                                                    placeholder="Longitude"
-                                                    className="w-full my-1"
-                                                />
+                                        <div className="my-2">
+                                            <div className="w-full flex flex-row justify-center">
+                                                <h5>Find Medical Centers within a certain distance</h5>
                                             </div>
 
-                                            <div className="my-2">
+                                            {LocationDialogComponents()}
+
+                                            <div className="my-2 flex flex-row items-center justify-between space-x-4">
                                                 <h6>Distance in Kilometers</h6>
                                                 <Input
                                                     placeholder="Distance"
                                                     inputMode="numeric"
-                                                    className="w-full"
+                                                    className="grow w-48"
                                                     onChange={(e) => setLocationSearchFilter({ ...locationSearchFilter, distance_km: parseInt(e.target.value) })}
                                                 />
                                             </div>
@@ -233,8 +290,8 @@ function ListView() {
                                                         }
                                                     }}
                                                 >
+                                                    <FilterIcon className="w-4 h-4 me-2"/>
                                                     <span>Apply Filter</span>
-                                                    <FilterIcon />
                                                 </Button>
                                             </div>
                                         </div>
@@ -243,6 +300,14 @@ function ListView() {
                             </div>
                         </DialogContent>
                     </Dialog>
+                    <Button
+                        className="ms-3"
+                        variant="outline"
+                        onClick={() => resetSearchFilters()}
+                    >
+                        <BanIcon className="text-red-500 w-4 h-4 me-2" />
+                        <span>Reset</span>
+                    </Button>
                 </div>
             </div>
             <div className="grow w-full py-2 px-2 overflow-y-auto grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
