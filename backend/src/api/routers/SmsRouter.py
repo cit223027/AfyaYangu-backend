@@ -35,7 +35,7 @@ def notify_incoming_message(
     )
 
     # Send the response back to the sender
-    africas_talking_repository.send_message(recipient=from_, message=response.message)
+    africas_talking_repository.send_message(recipient=from_, message=response)
 
 @sms_router.post("/ussd")
 def handle_ussd(
