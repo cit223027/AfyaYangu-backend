@@ -3,13 +3,13 @@ import {Card, CardContent, CardHeader} from "@/components/ui/card.tsx";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Input} from "@/components/ui/input.tsx";
-import Markdown from "react-markdown";
+import ReactJson from "@microlink/react-json-view";
 
 export default function MedicinePage() {
     const [cameraImage, setCameraImage] = useState<string | null>(null);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [response, setResponse] = useState<string | null>(null);
+    const [response, setResponse] = useState<any | null>(null);
 
     // Handle file selection from file system
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +62,7 @@ export default function MedicinePage() {
             });
 
             if (response.ok) {
-                const data = await response.text()
+                const data = await response.json()
                 setResponse(data);
             } else {
                 console.error('Failed to submit image');
@@ -78,7 +78,7 @@ export default function MedicinePage() {
         <div className="h-full w-full flex flex-col">
             <div className="grow w-full flex flex-col justify-center">
                 <div className="w-full flex flex-row">
-                    <Card className="mx-auto w-4/5 lg:w-3/5 xl:w-1/3">
+                    <Card className="mx-auto w-4/5 lg:w-3/5 xl:w-3/5">
                         <CardHeader>
                             <h4>Prescription</h4>
                             <p>Upload a prescription image or capture one using your camera.</p>
@@ -120,7 +120,17 @@ export default function MedicinePage() {
                             {response && (
                                 <div className="mt-4 mx-2 p-2 border rounded-xl">
                                     <h3 className="andika-bold text-lg">Response:</h3>
-                                    <div><pre>{JSON.stringify(response, null, 3)}</pre></div>
+                                    <div className="my-2">
+                                        <ReactJson
+                                            src={response.data}
+                                            theme="brewer"
+                                            name="data"
+                                            iconStyle="triangle"
+                                            enableClipboard={false}
+                                            displayDataTypes={false}
+
+                                        />
+                                    </div>
                                 </div>
                             )}
                         </CardContent>

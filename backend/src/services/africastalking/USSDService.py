@@ -148,7 +148,7 @@ class UssdService:
             elif len(current_input) > 0 and current_input[0] == '2':
                 # Send article on
 
-                SMSService.send_knowledge_disease_article_sms(
+                SMSService.send_knowledge_organ_article_sms(
                     africas_talking_repository,
                     phone_number,
                     organ,
@@ -159,7 +159,7 @@ class UssdService:
             elif len(current_input) > 0 and current_input[0] == '3':
                 # Send article on
 
-                SMSService.send_knowledge_disease_article_sms(
+                SMSService.send_knowledge_organ_article_sms(
                     africas_talking_repository,
                     phone_number,
                     organ,
@@ -170,7 +170,7 @@ class UssdService:
             elif len(current_input) > 0 and current_input[0] == '4':
                 # Send article on
 
-                SMSService.send_knowledge_disease_article_sms(
+                SMSService.send_knowledge_organ_article_sms(
                     africas_talking_repository,
                     phone_number,
                     organ,
