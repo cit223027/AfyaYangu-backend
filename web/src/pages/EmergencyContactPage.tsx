@@ -402,14 +402,17 @@ function MapView() {
                             lng: medicalCenter.longitude
                         },
                         title: medicalCenter.name,
-                        description: medicalCenter.description
+                        descriptions: [
+                            medicalCenter.description,
+                            "Emergency Contact: " + medicalCenter.emergency_mobile_number
+                        ]
                     }
                 })
                 setCurrentMarkers(markers)
                 setIsLoading(false)
             }
         })
-    })
+    }, [])
 
     return (
         <div className="w-full h-full flex flex-col pb-4 mt-2">

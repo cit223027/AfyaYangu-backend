@@ -29,7 +29,7 @@ def handle_prompt(request: PromptRequestModel) -> PromptResponseModel:
     )
 
 @ai_router.post("/base_prescription")
-async def handle_prescription(image: UploadFile = File(...)) -> str:
+async def handle_prescription(image: UploadFile = File(...)):
     """
     FastAPI endpoint to accept an image, encode it, and extract prescription details.
     """

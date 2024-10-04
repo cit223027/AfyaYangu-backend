@@ -70,6 +70,15 @@ class ChatGptHelper:
             "model": "gpt-4o-mini",  # or any appropriate model
             "messages": [
                 {
+                    "role": "system",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": """You are a prescription extractor assistant. Your role is to extract information from prescriptions and output them as JSON formatted strings. Avoid abbreviations as much as possible assuming the user cannot interpret them. The output should always be a JSON formatted string, text output will make the system crash. The json format is strict and expects a schema with the sections: "patient", "medical_center", "prescription_info", "dosages" only. The part dosages should contain each medicine, with prescribed dosage information as shown in the example (dosage_description should be clear and understandable instructions like "Take 5ml for 3 times, morning, afternoon and evening, after taking your meals")(dosage_period can be as_needed, hour, day, week or month). An example of output: { "error": "The image does not contain a prescription."} or:{ "prescriptions": [{ "patient": { "name": "John Smith" }, "medical_center": { "doctor_name": "Dr. Patesh"},"dosages": [{"medicine_name": "Cetrizin","dosage_description": "Take 2 tablets 3 times a day after meals","dosage_period": "day","dosage_type": "tablets","dosage_amount": "2","dosage_per_period": "3","dosage_meal_instruction": "after_meal"}]}]}"""
+                        }
+                    ]
+                },
+                {
                     "role": "user",
                     "content": [
                         {
@@ -98,7 +107,15 @@ class ChatGptHelper:
                 # Extract the assistant's message content
                 if 'choices' in response_data and len(response_data['choices']) > 0:
                     assistant_message = response_data['choices'][0]['message']['content']
-                    return assistant_message  # Return only the text response from the model
+
+                    try:
+                        json_data = json.loads(assistant_message[8:-3])
+                        return {
+                            "data": json_data
+                        }
+                    except:
+                        print("Assistant message: ", assistant_message[8: -3])
+                        return HTTPException(status_code=500, detail="Invalid response structure from the model.")
                 else:
                     raise HTTPException(status_code=500, detail="Invalid response structure from the model.")
             else:

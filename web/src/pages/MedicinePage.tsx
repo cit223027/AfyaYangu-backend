@@ -120,7 +120,7 @@ export default function MedicinePage() {
                             {response && (
                                 <div className="mt-4 mx-2 p-2 border rounded-xl">
                                     <h3 className="andika-bold text-lg">Response:</h3>
-                                    <Markdown>{response.slice(1, -1).replace("\n", " \n ")}</Markdown>
+                                    <div><pre>{JSON.stringify(response, null, 3)}</pre></div>
                                 </div>
                             )}
                         </CardContent>

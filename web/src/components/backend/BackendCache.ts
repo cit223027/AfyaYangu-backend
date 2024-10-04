@@ -19,6 +19,7 @@ export default class BackendCache {
 
     // Medical center cache
     private medicalCenterCache: Map<string, CacheObject<MedicalCenter>> = new Map();
+    private allMedicalCentersCache: CacheObject<Array<string>> | null = null;
     private closestMedicalCentersCache: Map<ClosestMedicalCentersCacheKey, MedicalCenter[]> = new Map();
 
     // User medication cache
@@ -105,12 +106,47 @@ export default class BackendCache {
 
     // Medical Center methods
     async getAllMedicalCenters(): Promise<MedicalCenter[] | undefined> {
-        const medicalCenters = await BackendApi.getAllMedicalCenters();
-        if (medicalCenters) {
-            medicalCenters.forEach(center => {
-                this.medicalCenterCache.set(center.medical_center_id!!, this.generateCacheObject(center));
-            });
+        const now = new Date();
+
+        // Check if the cached list of medical center IDs is still valid
+        if (
+            this.allMedicalCentersCache &&
+            now.getTime() - this.allMedicalCentersCache.lastUpdateTime.getTime() < this.CACHE_UPDATE_TIME
+        ) {
+            const medicalCenterIds = this.allMedicalCentersCache.item;
+            const medicalCenters: MedicalCenter[] = [];
+
+            // Retrieve medical centers from medicalCenterCache using the cached IDs
+            for (const centerId of medicalCenterIds) {
+                const cachedCenter = this.medicalCenterCache.get(centerId);
+                if (cachedCenter && now.getTime() - cachedCenter.lastUpdateTime.getTime() < this.CACHE_UPDATE_TIME) {
+                    medicalCenters.push(cachedCenter.item);
+                } else {
+                    // Fetch medical center if it's not in cache or is stale
+                    const center = await BackendApi.getMedicalCenter(centerId);
+                    if (center) {
+                        this.medicalCenterCache.set(centerId, this.generateCacheObject(center));
+                        medicalCenters.push(center);
+                    }
+                }
+            }
+
+            return medicalCenters;
         }
+
+        // If cache is stale or doesn't exist, fetch all medical centers from the backend
+        const medicalCenters = await BackendApi.getAllMedicalCenters();
+        if (!medicalCenters) return undefined;
+
+        // Cache the fetched medical centers and their IDs
+        const medicalCenterIds = medicalCenters.map(center => center.medical_center_id!!);
+        this.allMedicalCentersCache = this.generateCacheObject(medicalCenterIds);
+
+        // Store each medical center in the medicalCenterCache
+        medicalCenters.forEach(center => {
+            this.medicalCenterCache.set(center.medical_center_id!!, this.generateCacheObject(center));
+        });
+
         return medicalCenters;
     }
 

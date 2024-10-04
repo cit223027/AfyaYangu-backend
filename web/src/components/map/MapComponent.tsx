@@ -14,7 +14,7 @@ export type MapMarker = {
     id: string;
     position: google.maps.LatLngLiteral;
     title: string;
-    description: string;
+    descriptions: string[];
 };
 
 type SelectedMapMarker = {
@@ -176,9 +176,10 @@ export default function MapComponent({
                         anchor={selectedMarker.marker}
                         onCloseClick={handleInfoWindowCloseClick}
                     >
-                        <div className="text-black">
-                            <p className="my-1">{selectedMarker?.markerData?.description}</p>
-                            <p>{selectedMarker?.markerData?.id}</p>
+                        <div className="text-black my-2">
+                            {selectedMarker.markerData.descriptions.map((description) => (
+                                <p className="my-1">{description}</p>
+                            ))}
                         </div>
                     </InfoWindow>
                 )}
